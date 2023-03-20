@@ -54,7 +54,7 @@ export class LoginService {
     return this.http.get<LoginResponse>('/auth/refresh').subscribe(response => {
       // Save the response token into local storage & restart timer
       localStorage.setItem('token', response.access_token);
-      localStorage.setItem('token_expires_in', JSON.stringify(response.expires_in));
+      localStorage.setItem('expires_in', JSON.stringify(response.expires_in));
       this.startRefreshTokenTimer();
     });
   }
