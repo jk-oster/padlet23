@@ -1,11 +1,13 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LoginResponse} from "../models/login-response";
-
+import {UserResponse} from "../models/user-response";
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
+
+  refreshTimeoutId: any;
   constructor(private http: HttpClient) {
   }
 
@@ -13,9 +15,20 @@ export class LoginService {
     // Send a request to the server to authenticate the user
     return this.http.post<LoginResponse>('/auth/login', {username, password}).subscribe(response => {
       // Save the response token into local storage
-      const token = response.access_token;
-      localStorage.setItem('token', token);
+      localStorage.setItem('token', response.access_token);
+      localStorage.setItem('expires_in', JSON.stringify(response.expires_in));
+      this.startRefreshTokenTimer();
     });
+  }
+
+  startRefreshTokenTimer() {
+    const token = localStorage.getItem('token');
+    const expires_in = localStorage.getItem('expires_in');
+    if(token && expires_in) {
+      // set a timeout to refresh the token a minute before it expires
+      const timeout = Number(JSON.parse(expires_in)) - 60 * 1000;
+      this.refreshTimeoutId = setTimeout(() => this.refresh(), timeout);
+    }
   }
 
   logout() {
@@ -23,6 +36,26 @@ export class LoginService {
     return this.http.post('/auth/logout', {}).subscribe(() => {
       // Remove login data from local storage
       localStorage.removeItem('token');
+      localStorage.removeItem('user');
+      localStorage.removeItem('expires_in');
+      clearTimeout(this.refreshTimeoutId);
+    });
+  }
+
+  getCurrentUser() {
+    // Send a request to the server to log out the user
+    return this.http.get<UserResponse>('/auth/user').subscribe(response => {
+      // Remove login data from local storage
+      localStorage.setItem('user', JSON.stringify(response));
+    });
+  }
+
+  refresh() {
+    return this.http.get<LoginResponse>('/auth/refresh').subscribe(response => {
+      // Save the response token into local storage
+      localStorage.setItem('token', response.access_token);
+      localStorage.setItem('token_expires_in', JSON.stringify(response.expires_in));
+      this.startRefreshTokenTimer();
     });
   }
 }

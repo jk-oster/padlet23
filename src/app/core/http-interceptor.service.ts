@@ -2,7 +2,7 @@ import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/com
 import {Observable} from "rxjs";
 
 /**
- * Middleware ~ Interceptor
+ * Middleware ~ Interceptor Service
  * - sets REST API headers and Authorization header when JWT token is present in localStorage
  * - prepends REST API base url to requests
  * @see https://angular.io/guide/http#intercepting-all-requests-or-responses
