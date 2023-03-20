@@ -1,6 +1,8 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {ReactiveFormsModule} from '@angular/forms';
+import {FilterPipe} from './filter.pipe';
+import { FilterByPredicatePipe } from './filter-by-predicate.pipe';
 
 /**
  * The shared module is a place to put all the components, directives, and pipes that are used in multiple places in the app.
@@ -10,10 +12,14 @@ import { ReactiveFormsModule } from '@angular/forms';
  * @see https://angular.io/guide/ngmodule-faq#q-why-bad
  */
 @NgModule({
-  declarations: [],
+  declarations: [
+    FilterPipe,
+    FilterByPredicatePipe,
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
   ]
 })
-export class SharedModule { }
+export class SharedModule {
+}
