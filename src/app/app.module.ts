@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppComponent} from './app.component';
 
-import {HttpInterceptorService} from "./core/interceptors/http-interceptor.service";
+import {HttpInterceptorService} from "./core/http-interceptor.service";
 import {AppRoutingModule} from './core/app-routing.module';
 import {SharedModule} from './shared/shared.module';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
