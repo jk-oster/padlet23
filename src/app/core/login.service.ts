@@ -23,10 +23,10 @@ export class LoginService {
 
   startRefreshTokenTimer() {
     const token = localStorage.getItem('token');
-    const expires_in = localStorage.getItem('expires_in');
+    const expires_in = localStorage.getItem('expires_in'); // in seconds
     if(token && expires_in) {
       // set a timeout to refresh the token a minute before it expires
-      const timeout = Number(JSON.parse(expires_in)) - 60 * 1000;
+      const timeout = Number(JSON.parse(expires_in)) * 1000 - 60 * 1000; // in milliseconds
       this.refreshTimeoutId = setTimeout(() => this.refresh(), timeout);
     }
   }
@@ -34,7 +34,7 @@ export class LoginService {
   logout() {
     // Send a request to the server to log out the user
     return this.http.post('/auth/logout', {}).subscribe(() => {
-      // Remove login data from local storage
+      // Remove login data from local storage & stop timer
       localStorage.removeItem('token');
       localStorage.removeItem('user');
       localStorage.removeItem('expires_in');
@@ -43,16 +43,16 @@ export class LoginService {
   }
 
   getCurrentUser() {
-    // Send a request to the server to log out the user
+    // Send a request to the server to get user data
     return this.http.get<UserResponse>('/auth/user').subscribe(response => {
-      // Remove login data from local storage
+      // Save user data to local storage
       localStorage.setItem('user', JSON.stringify(response));
     });
   }
 
   refresh() {
     return this.http.get<LoginResponse>('/auth/refresh').subscribe(response => {
-      // Save the response token into local storage
+      // Save the response token into local storage & restart timer
       localStorage.setItem('token', response.access_token);
       localStorage.setItem('token_expires_in', JSON.stringify(response.expires_in));
       this.startRefreshTokenTimer();
