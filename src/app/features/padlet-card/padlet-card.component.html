@@ -1,0 +1,10 @@
+<div class="card max-w-96 bg-base-100 shadow-xl">
+  <figure><img [src]="padlet.cover" alt="" /></figure>
+  <div class="card-body">
+    <h2 class="card-title">{{padlet.name}}</h2>
+    <p>{{ padlet.description }}</p>
+    <div class="card-actions justify-end">
+      <a [href]="'padlet/' + padlet.id" class="btn btn-primary">Open Padlet</a>
+    </div>
+  </div>
+</div>
