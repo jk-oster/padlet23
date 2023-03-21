@@ -1,20 +1,34 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Utils } from './utils';
+import {Pipe, PipeTransform} from '@angular/core';
 
 @Pipe({
   name: 'filter'
 })
 export class FilterPipe implements PipeTransform {
-  transform<T>(items: T[], searchText: string, property: string): any[] {
-    if (!items) {
+
+  transform<T>(value: T[], predicates: ((item: T) => boolean)[], mode: string = 'AND'): T[] {
+    if (!value) {
       return [];
     }
-    if (!searchText) {
-      return items;
+
+    if (!predicates || predicates.length === 0) {
+      return value;
     }
-    searchText = searchText.toLowerCase();
-    return items.filter((item: T) => {
-      return Utils.getProp(item, property).toLowerCase().includes(searchText);
-    });
+
+    if (mode === 'AND') {
+      const andPredicate = (item: T) => predicates.every(p => p(item));
+      return value.filter(andPredicate);
+    }
+
+    if (mode === 'OR') {
+      const orPredicate = (item: T) => predicates.some(p => p(item));
+      return value.filter(orPredicate);
+    }
+
+    if (mode === 'NOT') {
+      const notPredicate = (item: T) => predicates.every(p => !p(item));
+      return value.filter(notPredicate);
+    }
+
+    return value;
   }
 }

@@ -29,5 +29,39 @@ export class Utils {
       return null;
     }, null);
   }
+
+  /**
+   * Debounce function: limit the number of times a function can be called in a given time.
+   * @param func
+   * @param delay
+   */
+  static debounce(func: Function, delay: number) {
+    let timer: any;
+    return (...args: any[]) => {
+      if (timer) {
+        clearTimeout(timer);
+      }
+      timer = setTimeout(() => {
+        func.apply(this, args);
+      }, delay);
+    };
+  }
+
+  /**
+   * Throttle function: limit the number of times a function can be called in a given time.
+   * @param func
+   * @param delay
+   */
+  static throttle(func: Function, delay: number) {
+    let timer: any;
+    return (...args: any[]) => {
+      if (!timer) {
+        timer = setTimeout(() => {
+          func.apply(this, args);
+          timer = null;
+        }, delay);
+      }
+    };
+  }
 }
 

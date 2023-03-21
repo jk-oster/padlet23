@@ -1,8 +1,8 @@
-import { FilterPipe } from './filter.pipe';
+import { FilterByPredicatePipe } from './filter-by-predicate.pipe';
 
-describe('FilterPipe', () => {
+describe('FilterByPredicatePipe', () => {
   it('create an instance', () => {
-    const pipe = new FilterPipe();
+    const pipe = new FilterByPredicatePipe();
     expect(pipe).toBeTruthy();
   });
 });

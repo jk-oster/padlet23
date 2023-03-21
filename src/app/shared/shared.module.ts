@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ReactiveFormsModule} from '@angular/forms';
-import {FilterPipe} from './filter.pipe';
-import { FilterByPredicatePipe } from './filter-by-predicate.pipe';
+import {SearchPipe} from './search.pipe';
+import { FilterPipe } from './filter.pipe';
 
 /**
  * The shared module is a place to put all the components, directives, and pipes that are used in multiple places in the app.
@@ -14,7 +14,7 @@ import { FilterByPredicatePipe } from './filter-by-predicate.pipe';
 @NgModule({
   declarations: [
     FilterPipe,
-    FilterByPredicatePipe,
+    SearchPipe,
   ],
   imports: [
     CommonModule,
