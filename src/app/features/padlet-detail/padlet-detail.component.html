@@ -1,7 +1,18 @@
 
-<h1>{{padlet.name}}</h1>
+<h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
 <div class="grid grid-cols-3 gap-4">
   <ng-container *ngFor="let post of posts">
-    <tw-post-card [post]="post"></tw-post-card>
+
+    <div class="card max-w-96 bg-base-100 shadow-xl">
+      <figure><img [src]="post.cover" alt="" /></figure>
+      <div class="card-body">
+        <h2 class="card-title">{{post.content}}</h2>
+        <p>{{ post.content }}</p>
+        <div class="card-actions justify-end">
+          <button (click)="deletePost(post.id)" class="btn btn-primary">Delete</button>
+        </div>
+      </div>
+    </div>
+
   </ng-container>
 </div>

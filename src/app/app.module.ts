@@ -2,19 +2,18 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
-
 import {HttpInterceptorService} from "./core/http-interceptor.service";
 import {HttpClientModule} from '@angular/common/http';
-
 import {AppRoutingModule} from './core/app-routing.module';
-import {SharedModule} from './shared/shared.module';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+
+import {SharedModule} from './shared/shared.module';
+
 import {LoginComponent} from './features/login/login.component';
 import {AppTopBarComponent} from './features/app-top-bar/app-top-bar.component';
 import {PadletCardComponent} from './features/padlet-card/padlet-card.component';
 import {PadletIndexComponent} from './features/padlet-index/padlet-index.component';
 import {PadletDetailComponent} from './features/padlet-detail/padlet-detail.component';
-import {PostCardComponent} from './features/post-card/post-card.component';
 import {NotFoundComponent} from './features/not-found/not-found.component';
 
 @NgModule({
@@ -26,7 +25,6 @@ import {NotFoundComponent} from './features/not-found/not-found.component';
     PadletCardComponent,
     PadletIndexComponent,
     PadletDetailComponent,
-    PostCardComponent,
     NotFoundComponent
   ],
   // what other modules are needed to run this module
