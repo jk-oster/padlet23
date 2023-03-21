@@ -1,4 +1,4 @@
-export interface LoginResponse {
+export interface Login {
   access_token: string;
   token_type: string;
   expires_in: number;
