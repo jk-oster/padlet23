@@ -1,15 +1,30 @@
-<form class="p-10 card bg-base-200">
-  <div class="form-control">
-    <label class="label">
-      <span class="label-text">Email</span>
-    </label>
-    <input type="text" placeholder="Email" class="input input-bordered">
+<ng-container *ngIf="!(auth.isAuthenticated)">
+  <form [formGroup]="loginForm" class="p-10 card bg-base-200">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Email</span>
+      </label>
+      <input formControlName="email" type="text" placeholder="Email" class="input input-bordered">
+    </div>
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Password</span>
+      </label>
+      <input formControlName="password" type="password" placeholder="Password" class="input input-bordered">
+    </div>
+    <button type="submit" (click)="login()" class="btn btn-primary mt-5">Login</button>
+
+    <div class="mt-5">
+      No Account yet? <a routerLink="/register" class="link">Register now!</a>
+    </div>
+  </form>
+</ng-container>
+<ng-container *ngIf="(auth.isAuthenticated)">
+  <div class="card bg-base-200 p-10">
+    <h1 class="text-2xl font-bold">Welcome back!</h1>
+    <p class="mt-2">You are already logged in.</p>
+    <button type="submit" (click)="logout()" class="btn btn-primary mt-5">Logout</button>
   </div>
-  <div class="form-control">
-    <label class="label">
-      <span class="label-text">Password</span>
-    </label>
-    <input type="password" placeholder="Password" class="input input-bordered">
-  </div>
-  <button type="submit" class="btn btn-primary mt-5">Login</button>
-</form>
+</ng-container>
+
+

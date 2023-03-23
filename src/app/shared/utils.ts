@@ -1,3 +1,5 @@
+import {combineLatest, fromEvent, map, Observable} from "rxjs";
+
 /**
  * Get a property from an object, even if it's nested.
  * @param obj
@@ -35,33 +37,42 @@ export class Utils {
    * @param func
    * @param delay
    */
-  static debounce(func: Function, delay: number) {
+  static debounce(func: (...args: any[]) => any, delay: number = 1000): (...args: any[]) => any {
     let timer: any;
     return (...args: any[]) => {
-      if (timer) {
-        clearTimeout(timer);
-      }
+      clearTimeout(timer);
       timer = setTimeout(() => {
-        func.apply(this, args);
+        func(...args);
       }, delay);
     };
   }
 
   /**
-   * Throttle function: limit the number of times a function can be called in a given time.
-   * @param func
-   * @param delay
+   * Create a computed observable.
+   * Combine multiple observables into one, and call a function with the results.
+   * @param inputs Observables to combine
+   * @param fn Function to call with the results
    */
-  static throttle(func: Function, delay: number) {
-    let timer: any;
-    return (...args: any[]) => {
-      if (!timer) {
-        timer = setTimeout(() => {
-          func.apply(this, args);
-          timer = null;
-        }, delay);
-      }
-    };
+  static computed(inputs: Observable<any>[], fn: (...args: any[]) => any): Observable<any> {
+    return combineLatest(inputs).pipe(
+      map(args => fn(...args))
+    );
+  }
+
+  /**
+   * An observable that emits when a local storage item changes.
+   */
+  localStorageChanges(): Observable<any> {
+    return fromEvent(window, 'storage').pipe(
+      map((event: any) => {
+        return {
+          key: event.key,
+          newValue: event.newValue,
+          oldValue: event.oldValue,
+          storageArea: event.storageArea
+        };
+      })
+    );
   }
 }
 

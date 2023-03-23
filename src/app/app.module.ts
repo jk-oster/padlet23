@@ -2,29 +2,37 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {CommonModule} from '@angular/common';
 import {AppComponent} from './app.component';
-import {HttpInterceptorService} from "./core/http-interceptor.service";
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './core/app-routing.module';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
+import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
+import {HttpInterceptorService} from "./core/http-interceptor.service";
 import {SharedModule} from './shared/shared.module';
-
 import {LoginComponent} from './features/login/login.component';
 import {AppTopBarComponent} from './features/app-top-bar/app-top-bar.component';
-import {PadletCardComponent} from './features/padlet-card/padlet-card.component';
 import {PadletIndexComponent} from './features/padlet-index/padlet-index.component';
-import {PadletDetailComponent} from './features/padlet-detail/padlet-detail.component';
+import {PadletShowComponent} from './features/padlet-show/padlet-show.component';
 import {NotFoundComponent} from './features/not-found/not-found.component';
+import {ReactiveFormsModule} from "@angular/forms";
 
+/**
+ * The root module of the application.
+ * - This module is the entry point to the application.
+ * - It is the only module that is bootstrapped.
+ * - It is the only module that is imported into the main.ts file.
+ * - It declares the components, directives, and pipes that belong to the module.
+ * - It imports other modules that are needed to run the application.
+ * - It defines the providers that are needed to run the application.
+ */
 @NgModule({
   // what components, directives, and pipes belong to the module
   declarations: [
     AppComponent,
     LoginComponent,
     AppTopBarComponent,
-    PadletCardComponent,
     PadletIndexComponent,
-    PadletDetailComponent,
+    PadletShowComponent,
     NotFoundComponent
   ],
   // what other modules are needed to run this module
@@ -34,10 +42,11 @@ import {NotFoundComponent} from './features/not-found/not-found.component';
     HttpClientModule,
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
   ],
   // what services does this module provide
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
   ],
   // what is the main component of this module
   bootstrap: [AppComponent]

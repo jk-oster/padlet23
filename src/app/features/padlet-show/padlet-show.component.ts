@@ -6,17 +6,22 @@ import {PostService} from "../../core/post.service";
 import {Post} from "../../models/post";
 
 @Component({
-  selector: 'tw-padlet-card-detail',
-  templateUrl: './padlet-detail.component.html',
+  selector: 'tw-padlet-show',
+  templateUrl: './padlet-show.component.html',
   styles: []
 })
-export class PadletDetailComponent implements OnInit {
+export class PadletShowComponent implements OnInit {
   padletId: number = 0;
   padlet: Padlet = {
-    id: '',
+    id: 0,
     name: '',
     cover: '',
-    description: ''
+    description: '',
+    created_at: '',
+    updated_at: '',
+    posts: [],
+    user_id: 1,
+    public: true
   }
 
   posts: Post[] = [];

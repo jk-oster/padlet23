@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {AuthService} from "./core/auth.service";
+import {Utils} from "./shared/utils";
+import {of} from "rxjs";
 
 @Component({
   // we can use the selector to use this component in other components
@@ -10,7 +13,17 @@ import { Component } from '@angular/core';
   // styles is the css file that will be used for this component
   styles: []
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   // title is a property of this component
   title = 'padlet23';
+
+  // constructor is called when the component is created
+  constructor(protected auth: AuthService) {
+    this.auth = auth;
+  }
+
+  // ngOnInit is a lifecycle hook that is called when the component is initialized
+  ngOnInit(): void {
+    AuthService.init();
+  }
 }

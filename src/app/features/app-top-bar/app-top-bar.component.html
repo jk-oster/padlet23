@@ -2,8 +2,12 @@
   <div class="navbar-start">
     <a href="/" class="btn btn-ghost normal-case text-xl">Padlet23</a>
   </div>
+  <div *ngIf="auth.user" class="navbar-center">
+    <h2 class="text-2xl font-bold">Hi {{ auth.user.name }}</h2>
+  </div>
   <div class="navbar-end">
 <!--  Search  -->
+<!--  Search input in daisyui style  -->
     <button class="btn btn-ghost btn-circle">
       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
     </button>
@@ -22,14 +26,15 @@
         </div>
       </label>
       <ul tabindex="0" class="menu menu-compact dropdown-content mt-3 p-2 shadow bg-neutral rounded-box w-52">
-<!--        <li>-->
-<!--          <a class="justify-between">-->
-<!--            Profile-->
-<!--            <span class="badge">New</span>-->
-<!--          </a>-->
-<!--        </li>-->
-<!--        <li><a>Settings</a></li>-->
-        <li><button>Logout</button></li>
+        <ng-container *ngIf="!(auth.isAuthenticated)">
+          <li><a routerLink="/register">Register</a></li>
+          <li><a routerLink="/login">Login</a></li>
+        </ng-container>
+        <ng-container *ngIf="(auth.isAuthenticated)">
+          <li><a routerLink="/profile">Profile</a></li>
+          <li><a routerLink="/settings">Settings</a></li>
+          <li><button (click)="logout()">Logout</button></li>
+        </ng-container>
       </ul>
     </div>
   </div>

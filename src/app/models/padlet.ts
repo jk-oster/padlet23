@@ -3,7 +3,7 @@ import {User} from "./user";
 import {PadletUser} from "./padlet-user";
 
 export interface Padlet {
-  id: string;
+  id: number;
   name: string;
   public: boolean;
   description: string;

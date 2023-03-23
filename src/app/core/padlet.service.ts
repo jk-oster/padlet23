@@ -24,7 +24,7 @@ export class PadletService {
   }
 
   updatePadlet(id: number, name: string, description: string, cover: string): Observable<Padlet>  {
-    return this.http.put<Padlet>(`/padlet/${id}`, {name, description, cover});
+    return this.http.put<Padlet>(`/padlet/${id}`, {name: name, description: description, cover: cover});
   }
 
   deletePadlet(id: string): Observable<any> {

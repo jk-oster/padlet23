@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
 import {Observable} from "rxjs";
 
@@ -7,6 +8,7 @@ import {Observable} from "rxjs";
  * - prepends REST API base url to requests
  * @see https://angular.io/guide/http#intercepting-all-requests-or-responses
  */
+@Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
@@ -22,9 +24,10 @@ export class HttpInterceptorService implements HttpInterceptor {
 
     // Set Authorization header
     if (token) {
-      const authReq = req.clone({
+      const authReq = newReq.clone({
         headers: newReq.headers.set('Authorization', `Bearer ${token}`)
       });
+
       return next.handle(authReq);
     }
     return next.handle(newReq);
