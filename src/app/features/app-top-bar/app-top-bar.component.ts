@@ -1,11 +1,10 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {AuthService} from "../../core/auth.service";
 
 @Component({
   selector: 'tw-app-top-bar',
   templateUrl: './app-top-bar.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class AppTopBarComponent {
 

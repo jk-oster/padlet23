@@ -14,9 +14,9 @@ import {PadletIndexComponent} from './features/padlet-index/padlet-index.compone
 import {PadletShowComponent} from './features/padlet-show/padlet-show.component';
 import {NotFoundComponent} from './features/not-found/not-found.component';
 import {ReactiveFormsModule} from "@angular/forms";
-import { PadletStoreComponent } from './features/padlet-store/padlet-store.component';
-import { PadletShareComponent } from './features/padlet-share/padlet-share.component';
-import { PostStoreComponent } from './features/post-store/post-store.component';
+import {PadletStoreComponent} from './features/padlet-store/padlet-store.component';
+import {PadletShareComponent} from './features/padlet-share/padlet-share.component';
+import {PostStoreComponent} from './features/post-store/post-store.component';
 
 /**
  * The root module of the application.
