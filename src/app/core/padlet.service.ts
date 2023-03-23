@@ -32,7 +32,7 @@ export class PadletService {
   }
 
   togglePadletPublic(padlet: Padlet): Observable<Padlet> {
-    return this.http.put<Padlet>(`/padlet/${padlet.id}`, {public: !padlet.public});
+    return this.http.put<Padlet>(`/padlet/${padlet.id}/toggle`, {});
   }
 
   sharePadlet(padlet: Padlet){

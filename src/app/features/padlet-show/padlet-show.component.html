@@ -3,9 +3,12 @@
     <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
   </div>
   <div class="flex">
-    <a routerLink="/new/post" class="btn btn-primary mb-4 mr-4">Create new Post</a>
 
-    <div class="avatar-group -space-x-6">
+    <div *ngIf="padlet.public || padlet.user_id == auth.user?.id">
+      <a [routerLink]="'/new/post/' + padlet.id" class="btn btn-primary mb-4 mr-4">Create new Post</a>
+    </div>
+
+    <div *ngIf="!padlet.public" class="avatar-group -space-x-6">
       <ng-container *ngFor="let user of padlet.padlet_user">
         <div class="avatar">
           <div class="w-12">
@@ -17,10 +20,11 @@
     </div>
 
     <a [routerLink]="'/share/padlet/' + padlet.id" class="btn btn-primary mb-4">Share Padlet</a>
-    <div class="form-control">
+
+    <div *ngIf="padlet.user_id == auth.user?.id" class="form-control">
       <label class="label cursor-pointer">
         <span class="label-text">Padlet is public</span>
-        <input type="checkbox" class="toggle" checked/>
+        <input (change)="togglePublic()" type="checkbox" class="toggle toggle-success" checked/>
       </label>
     </div>
   </div>

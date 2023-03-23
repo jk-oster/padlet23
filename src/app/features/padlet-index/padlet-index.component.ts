@@ -24,7 +24,11 @@ export class PadletIndexComponent {
 
   debouncedUpdatePadlet = Utils.debounce((padlet: Padlet, event: any) => {
     const name = event.target.value;
-    this.padletService.updatePadlet(padlet.id, {name: name, description: padlet.description, cover: padlet.cover}).subscribe((padlet: Padlet) => {
+    this.padletService.updatePadlet(padlet.id, {
+      name: name,
+      description: padlet.description,
+      cover: padlet.cover
+    }).subscribe((padlet: Padlet) => {
       console.log(padlet);
     });
   }, 500);

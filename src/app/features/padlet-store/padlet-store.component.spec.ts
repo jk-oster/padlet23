@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PadletStoreComponent } from './padlet-store.component';
+import {PadletStoreComponent} from './padlet-store.component';
 
 describe('PadletStoreComponent', () => {
   let component: PadletStoreComponent;
@@ -8,9 +8,9 @@ describe('PadletStoreComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PadletStoreComponent ]
+      declarations: [PadletStoreComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PadletStoreComponent);
     component = fixture.componentInstance;

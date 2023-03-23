@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PadletShowComponent } from './padlet-show.component';
+import {PadletShowComponent} from './padlet-show.component';
 
 describe('PadletDetailComponent', () => {
   let component: PadletShowComponent;
@@ -8,9 +8,9 @@ describe('PadletDetailComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PadletShowComponent ]
+      declarations: [PadletShowComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PadletShowComponent);
     component = fixture.componentInstance;

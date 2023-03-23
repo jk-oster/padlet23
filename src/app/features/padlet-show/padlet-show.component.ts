@@ -5,6 +5,7 @@ import {Padlet} from "../../models/padlet";
 import {PostService} from "../../core/post.service";
 import {Post} from "../../models/post";
 import {User} from "../../models/user";
+import {AuthService} from "../../core/auth.service";
 
 @Component({
   selector: 'tw-padlet-show',
@@ -26,8 +27,10 @@ export class PadletShowComponent implements OnInit {
   }
 
   posts: Post[] = [];
+
   constructor(
     private route: ActivatedRoute,
+    protected auth: AuthService,
     private padletService: PadletService,
     private postService: PostService) {
     this.padletService = padletService;
@@ -48,6 +51,12 @@ export class PadletShowComponent implements OnInit {
   deletePost(id: number) {
     this.postService.deletePost(id).subscribe(() => {
       this.posts = this.posts.filter((post) => post.id !== id);
+    });
+  }
+
+  togglePublic() {
+    this.padletService.togglePadletPublic(this.padlet).subscribe(() => {
+      console.log('toggled');
     });
   }
 

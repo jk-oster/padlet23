@@ -12,6 +12,8 @@
         <h2 class="card-title">
           <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" type="text" placeholder="Type here"
                  class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+          <span *ngIf="padlet.public" class="badge badge-lg">Public</span>
+          <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
         </h2>
         <p>{{ padlet.description }}</p>
         <div class="card-actions justify-end">

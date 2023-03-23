@@ -1,10 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'tw-padlet-share',
   templateUrl: './padlet-share.component.html',
-  styles: [
-  ]
+  styles: []
 })
 export class PadletShareComponent {
 

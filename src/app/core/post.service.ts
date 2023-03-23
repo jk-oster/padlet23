@@ -19,12 +19,15 @@ export class PostService {
     return this.http.get<Post>(`/padlet/${padletId}/post/${id}`);
   }
 
-  createPost(padletId: number, content: string, cover: string): Observable<Post> {
-    return this.http.post<Post>('/post', {content, cover, 'padlet_id': padletId});
+  createPost(padletId: number, data: any): Observable<Post> {
+    if(!data.padlet_id) {
+      data.padlet_id = padletId;
+    }
+    return this.http.post<Post>('/post', data);
   }
 
-  updatePost(id: number, content: string, cover: string): Observable<Post> {
-    return this.http.post<Post>(`/post/${id}`, {content, cover});
+  updatePost(id: number, data: any): Observable<Post> {
+    return this.http.post<Post>(`/post/${id}`, data);
   }
 
   deletePost(id: number): Observable<any> {

@@ -1,0 +1,17 @@
+<form [formGroup]="storeForm">
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Post Content</span>
+    </label>
+    <input formControlName="content" type="text" placeholder="My new Post content" class="input input-bordered">
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Post Cover</span>
+    </label>
+    <input formControlName="cover" type="text" placeholder="image url" class="input input-bordered">
+  </div>
+  <button (click)="store()" class="btn btn-primary mt-5  mr-4">Create Post</button>
+  <button (click)="back()" class="btn btn-outline mt-5">Cancel and Back</button>
+</form>

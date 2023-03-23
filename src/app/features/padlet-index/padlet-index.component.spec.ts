@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PadletIndexComponent } from './padlet-index.component';
+import {PadletIndexComponent} from './padlet-index.component';
 
 describe('PadletIndexComponent', () => {
   let component: PadletIndexComponent;
@@ -8,9 +8,9 @@ describe('PadletIndexComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ PadletIndexComponent ]
+      declarations: [PadletIndexComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(PadletIndexComponent);
     component = fixture.componentInstance;
