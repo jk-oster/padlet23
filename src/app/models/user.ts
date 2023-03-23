@@ -13,5 +13,5 @@ export interface User {
   ratings?: Rating[];
   comments?: Comment[];
   padlets?: Padlet[];
-  padletUsers?: PadletUser[];
+  padlet_user?: PadletUser[];
 }

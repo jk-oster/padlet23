@@ -124,6 +124,12 @@ export class AuthService {
   }
 
 
+  public async searchUsers(searchTerm: string): Promise<User> {
+    // Send a request to the server to log out the user
+    return lastValueFrom(this.http.get<User>('/search/users/' + searchTerm));
+  }
+
+
   private async refresh(): Promise<Login> {
     const response: Login = await lastValueFrom(this.http.get<Login>('/auth/refresh'));
     localStorage.setItem('token', response.access_token);

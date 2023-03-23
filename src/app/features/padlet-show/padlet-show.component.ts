@@ -4,6 +4,7 @@ import {PadletService} from "../../core/padlet.service";
 import {Padlet} from "../../models/padlet";
 import {PostService} from "../../core/post.service";
 import {Post} from "../../models/post";
+import {User} from "../../models/user";
 
 @Component({
   selector: 'tw-padlet-show',
@@ -25,7 +26,6 @@ export class PadletShowComponent implements OnInit {
   }
 
   posts: Post[] = [];
-
   constructor(
     private route: ActivatedRoute,
     private padletService: PadletService,

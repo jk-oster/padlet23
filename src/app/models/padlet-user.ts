@@ -1,7 +1,10 @@
-export interface PadletUser {
-  user_id: number;
-  padlet_id: number;
-  created_at: string;
-  updated_at: string;
-  permission_level: number;
+import {User} from "./user";
+
+export interface PadletUser extends User{
+  pivot: {
+    padlet_id: number,
+    user_id: number,
+    permission_level: number,
+    accepted: number
+  }
 }

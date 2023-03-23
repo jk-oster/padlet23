@@ -1,16 +1,42 @@
+<div>
+  <div>
+    <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
+  </div>
+  <div class="flex">
+    <a routerLink="/new/post" class="btn btn-primary mb-4 mr-4">Create new Post</a>
 
-<h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
+    <div class="avatar-group -space-x-6">
+      <ng-container *ngFor="let user of padlet.padlet_user">
+        <div class="avatar">
+          <div class="w-12">
+            <img [src]="user.avatar" [alt]="user.name"/>
+          </div>
+        </div>
+      </ng-container>
+
+    </div>
+
+    <a [routerLink]="'/share/padlet/' + padlet.id" class="btn btn-primary mb-4">Share Padlet</a>
+    <div class="form-control">
+      <label class="label cursor-pointer">
+        <span class="label-text">Padlet is public</span>
+        <input type="checkbox" class="toggle" checked/>
+      </label>
+    </div>
+  </div>
+</div>
+
 <div class="grid grid-cols-3 gap-4">
   <ng-container *ngFor="let post of posts">
 
-<!--  Post Card  -->
+    <!--  Post Card  -->
     <div class="card max-w-96 bg-base-100 shadow-xl">
-      <figure><img [src]="post.cover" alt="" /></figure>
+      <figure><img [src]="post.cover" alt=""/></figure>
       <div class="card-body">
         <h2 class="card-title">{{post.content}}</h2>
         <p>{{ post.content }}</p>
         <div class="card-actions justify-end">
-          <button (click)="deletePost(post.id)" class="btn btn-primary">Delete</button>
+          <button (click)="deletePost(post.id)" class="btn btn-outline btn-error">Delete</button>
         </div>
       </div>
     </div>

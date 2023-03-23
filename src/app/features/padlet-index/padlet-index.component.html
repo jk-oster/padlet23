@@ -1,16 +1,21 @@
+<div>
+  <a routerLink="/new/padlet" class="btn btn-primary mb-4">Create new Padlet</a>
+</div>
 <div class="grid grid-cols-3 gap-4">
+
   <ng-container *ngFor="let padlet of padlets">
 
-<!--  Padlet Card  -->
+    <!--  Padlet Card  -->
     <div class="card max-w-96 bg-base-100 shadow-xl">
-      <figure><img [src]="padlet.cover" alt="" /></figure>
+      <figure><img [src]="padlet.cover" alt=""/></figure>
       <div class="card-body">
         <h2 class="card-title">
-          <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" type="text" placeholder="Type here" class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs" />
+          <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" type="text" placeholder="Type here"
+                 class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
         </h2>
         <p>{{ padlet.description }}</p>
         <div class="card-actions justify-end">
-          <a [href]="'padlet/' + padlet.id" class="btn btn-primary">Open Padlet</a>
+          <a [href]="'padlet/' + padlet.id" class="btn btn-outline btn-primary">Open Padlet</a>
         </div>
       </div>
     </div>

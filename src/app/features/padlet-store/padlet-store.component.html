@@ -1,0 +1,22 @@
+<form [formGroup]="storeForm">
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Padlet Name</span>
+    </label>
+    <input formControlName="name" type="text" placeholder="My new Padlet" class="input input-bordered">
+  </div>
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Padlet Description</span>
+    </label>
+    <input formControlName="description" type="text" placeholder="My new Padlet description" class="input input-bordered">
+  </div>
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Padlet Cover</span>
+    </label>
+    <input formControlName="cover" type="text" placeholder="image url" class="input input-bordered">
+  </div>
+  <button (click)="store()" class="btn btn-primary mt-5  mr-4">Create Padlet</button>
+  <button (click)="back()" class="btn btn-outline mt-5">Cancel and Back</button>
+</form>

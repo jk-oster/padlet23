@@ -19,15 +19,37 @@ export class PadletService {
     return this.http.get<Padlet>(`/padlet/${id}`);
   }
 
-  createPadlet(name: string, description: string, cover: string): Observable<Padlet>  {
-    return this.http.post<Padlet>('/padlet', {name, description, cover});
+  createPadlet(data: Object): Observable<Padlet>  {
+    return this.http.post<Padlet>('/padlet', data);
   }
 
-  updatePadlet(id: number, name: string, description: string, cover: string): Observable<Padlet>  {
-    return this.http.put<Padlet>(`/padlet/${id}`, {name: name, description: description, cover: cover});
+  updatePadlet(id: number, data: Object): Observable<Padlet>  {
+    return this.http.put<Padlet>(`/padlet/${id}`, data);
   }
 
-  deletePadlet(id: string): Observable<any> {
+  deletePadlet(id: number): Observable<any> {
     return this.http.delete<any>(`/padlet/${id}`);
+  }
+
+  togglePadletPublic(padlet: Padlet): Observable<Padlet> {
+    return this.http.put<Padlet>(`/padlet/${padlet.id}`, {public: !padlet.public});
+  }
+
+  sharePadlet(padlet: Padlet){
+    const user = [
+      {
+        "user_id": 4,
+        "permission_level": 1
+      },
+      {
+        "user_id": 5,
+        "permission_level": 2
+      },
+      {
+        "user_id": 6,
+        "permission_level": 3
+      }
+    ];
+    return this.http.post(`/padlet/${padlet.id}/share`, user);
   }
 }

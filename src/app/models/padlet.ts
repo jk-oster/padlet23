@@ -12,6 +12,6 @@ export interface Padlet {
   updated_at: string;
   user_id: number;
   user?: User;
-  padletUsers?: PadletUser[];
+  padlet_user?: PadletUser[];
   posts?: Post[];
 }
