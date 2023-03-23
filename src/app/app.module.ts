@@ -5,7 +5,6 @@ import {AppComponent} from './app.component';
 import {HttpClientModule} from '@angular/common/http';
 import {AppRoutingModule} from './core/app-routing.module';
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
-import {JWT_OPTIONS, JwtHelperService} from "@auth0/angular-jwt";
 
 import {HttpInterceptorService} from "./core/http-interceptor.service";
 import {SharedModule} from './shared/shared.module';
@@ -15,6 +14,9 @@ import {PadletIndexComponent} from './features/padlet-index/padlet-index.compone
 import {PadletShowComponent} from './features/padlet-show/padlet-show.component';
 import {NotFoundComponent} from './features/not-found/not-found.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { PadletStoreComponent } from './features/padlet-store/padlet-store.component';
+import { PadletShareComponent } from './features/padlet-share/padlet-share.component';
+import { PostStoreComponent } from './features/post-store/post-store.component';
 
 /**
  * The root module of the application.
@@ -33,7 +35,10 @@ import {ReactiveFormsModule} from "@angular/forms";
     AppTopBarComponent,
     PadletIndexComponent,
     PadletShowComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    PadletStoreComponent,
+    PadletShareComponent,
+    PostStoreComponent
   ],
   // what other modules are needed to run this module
   imports: [
