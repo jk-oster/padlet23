@@ -13,14 +13,19 @@ export class HttpInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const token = localStorage.getItem('token');
 
-    const newReq = req.clone({
+    let newReq = req.clone({
       // Set REST API headers
       headers: req.headers
         .set('Content-Type', `application/json`)
         .set('Accept', `application/json`),
-      // Prepend REST API base url
-      url: 'http://padlet.s2010456022.student.kwmhgb.at/api' + req.url,
     });
+
+    if(!req.url.includes('unsplash.com')) {
+        newReq = newReq.clone({
+          // Prepend REST API base url
+          url: 'http://padlet.s2010456022.student.kwmhgb.at/api' + req.url,
+        });
+    }
 
     // Set Authorization header
     if (token) {
