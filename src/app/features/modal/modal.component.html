@@ -1,0 +1,13 @@
+<div class="modal visible opacity-100 pointer-events-auto">
+  <div [class]="'modal-box ' + modalClass" clickOutside (clickOutside)="onClickOutside()">
+    <div class="flex justify-between">
+      <ng-container *ngTemplateOutlet="modalHeaderContent"></ng-container>
+      <h3 *ngIf="!modalHeaderContent && modalTitle" class="font-bold text-lg">{{modalTitle}}</h3>
+      <button *ngIf="modalClose" [class]="modalCloseClass" (click)="onClose()" title="Close dialog">{{modalCloseText}}</button>
+    </div>
+    <ng-content></ng-content>
+    <div *ngIf="modalFooter" class="modal-action">
+      <ng-container *ngTemplateOutlet="modalFooterContent"></ng-container>
+    </div>
+  </div>
+</div>
