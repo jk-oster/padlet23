@@ -26,7 +26,7 @@ export class PadletStoreComponent implements OnInit {
     this.storeForm = new FormGroup({
       name: new FormControl(),
       description: new FormControl(),
-      cover: new FormControl('https://source.unsplash.com/random/800x600/?' + this.imageService.randomTopic()),
+      cover: new FormControl(this.imageService.randomThumbnailImage()),
     });
   }
 

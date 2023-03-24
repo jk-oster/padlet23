@@ -19,4 +19,8 @@ export class ImageService {
     return topics[Math.floor(Math.random() * topics.length)];
   }
 
+  randomThumbnailImage(size = {width: 400, height: 300}): string {
+    return `https://source.unsplash.com/random/${size.width}x${size.height}/?` + this.randomTopic();
+  }
+
 }

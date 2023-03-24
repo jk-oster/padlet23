@@ -1,19 +1,21 @@
-<div>
+<div class="w-full">
   <div>
     <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
   </div>
-  <div class="flex">
+  <div class="flex items-center bg-base-100 justify-between w-full rounded-full shadow my-4 p-4">
 
-    <ng-container *ngIf="padlet?.user?.avatar">
-      <span class="text-base"> Padlet of: {{padlet?.user?.name}}</span>
-      <div class="avatar">
-        <div class="w-12 rounded-full">
-          <img [src]="padlet?.user?.avatar" [alt]="padlet?.user?.name"/>
+    <ng-container *ngIf="padlet.user?.avatar">
+      <div class="flex items-center">
+        <span class="text-base"> Padlet of: {{padlet.user?.name}}</span>
+        <div class="avatar">
+          <div class="w-12 h-12 rounded-full">
+            <img [src]="padlet.user?.avatar" [alt]="padlet.user?.name"/>
+          </div>
         </div>
       </div>
     </ng-container>
 
-    <button stopPropagation (click)="showModal('addPost')" class="btn btn-primary mb-4">New Post</button>
+    <button stopPropagation (click)="showModal('addPost')" class="btn btn-primary">New Post</button>
 
     <tw-modal *ngIf="modals['addPost']" modalName="addPost" teleport (modalCloseEvent)="closeModal($event)"
               modalTitle="New Post">
@@ -22,8 +24,8 @@
 
     <div *ngIf="!isPublic" class="avatar-group -space-x-6">
       <ng-container *ngFor="let user of padlet.padlet_user">
-        <div class="avatar">
-          <div class="w-12">
+        <div class="avatar h-14">
+          <div class="w-12 h-12 rounded-full">
             <img [src]="user.avatar" [alt]="user.name"/>
           </div>
         </div>
@@ -36,7 +38,7 @@
     <button class="btn" (click)="copyToClipboard()">Copy link</button>
 
     <button *ngIf="auth.isAuthenticated && !isPublic && auth.isAdmin(padlet)" stopPropagation
-            (click)="showModal('share')" class="btn btn-primary mb-4">Share Padlet
+            (click)="showModal('share')" class="btn btn-primary">Share Padlet
     </button>
     <tw-modal *ngIf="modals['share']" modalClass="w-9/12 max-w-5xl" modalName="share" teleport
               (modalCloseEvent)="closeModal($event)" modalTitle="Share Padlet">
@@ -45,7 +47,7 @@
 
     <!--  Delete Padlet  -->
     <button *ngIf="isPublic || (auth.isAuthenticated && auth.isAdmin(padlet))" stopPropagation
-            (click)="showModal('delete')" class="btn btn-error mb-4">Delete Padlet
+            (click)="showModal('delete')" class="btn btn-error">Delete Padlet
     </button>
     <tw-modal *ngIf="modals['delete']" modalName="delete" teleport (modalCloseEvent)="closeModal($event)"
               modalTitle="Delete Padlet">
@@ -58,8 +60,8 @@
     <!--  Toggle Public  -->
     <div *ngIf="auth.isAdmin(padlet)" class="form-control">
       <label class="label cursor-pointer">
-        <span class="label-text">Padlet is public</span>
         <input (change)="togglePublic()" type="checkbox" class="toggle toggle-success" [checked]="isPublic"/>
+        <span class=" ml-2 label-text">Padlet is public</span>
       </label>
     </div>
   </div>

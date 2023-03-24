@@ -47,7 +47,7 @@ export class PostStoreComponent implements OnInit {
     }
     this.storeForm = new FormGroup({
       content: new FormControl(),
-      cover: new FormControl('https://source.unsplash.com/random/800x600/?' + this.imageService.randomTopic()),
+      cover: new FormControl(this.imageService.randomThumbnailImage()),
     });
   }
 
