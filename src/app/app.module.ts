@@ -13,10 +13,11 @@ import {AppTopBarComponent} from './features/app-top-bar/app-top-bar.component';
 import {PadletIndexComponent} from './features/padlet-index/padlet-index.component';
 import {PadletShowComponent} from './features/padlet-show/padlet-show.component';
 import {NotFoundComponent} from './features/not-found/not-found.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PadletStoreComponent} from './features/padlet-store/padlet-store.component';
 import {PadletShareComponent} from './features/padlet-share/padlet-share.component';
 import {PostStoreComponent} from './features/post-store/post-store.component';
+import {ModalComponent} from './features/modal/modal.component';
 
 /**
  * The root module of the application.
@@ -38,17 +39,19 @@ import {PostStoreComponent} from './features/post-store/post-store.component';
     NotFoundComponent,
     PadletStoreComponent,
     PadletShareComponent,
-    PostStoreComponent
+    PostStoreComponent,
+    ModalComponent
   ],
   // what other modules are needed to run this module
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        HttpClientModule,
+        CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+    ],
   // what services does this module provide
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpInterceptorService, multi: true},
