@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PadletService} from "../../core/padlet.service";
 import {Padlet} from "../../models/padlet";
 import {PostService} from "../../core/post.service";
@@ -7,8 +7,6 @@ import {Post} from "../../models/post";
 import {AuthService} from "../../core/auth.service";
 import {Utils} from "../../shared/utils";
 import {AssocArray} from "../../shared/assoc-array";
-
-
 
 @Component({
   selector: 'tw-padlet-show',
@@ -45,6 +43,7 @@ export class PadletShowComponent implements OnInit {
     private route: ActivatedRoute,
     protected auth: AuthService,
     private padletService: PadletService,
+    private router: Router,
     private postService: PostService) {
     this.padletService = padletService;
     this.postService = postService;
@@ -81,6 +80,12 @@ export class PadletShowComponent implements OnInit {
     });
   }
 
+  deletePadlet() {
+    this.padletService.deletePadlet(this.padlet.id).subscribe(() => {
+      this.router.navigate(['/']);
+    });
+  }
+
   togglePublic() {
     this.padletService.togglePadletPublic(this.padlet).subscribe(() => {
       console.log('toggled');
@@ -98,5 +103,9 @@ export class PadletShowComponent implements OnInit {
 
   copyToClipboard() {
     Utils.copyToClipboard();
+  }
+
+  public get isPublic() {
+    return this.padlet.public;
   }
 }
