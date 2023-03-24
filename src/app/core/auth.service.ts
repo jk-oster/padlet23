@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Login} from "../models/login";
 import {User} from "../models/user";
 import {Observable, lastValueFrom} from "rxjs";
+import {Padlet} from "../models/padlet";
 
 @Injectable({
   providedIn: 'root'
@@ -133,5 +134,15 @@ export class AuthService {
     localStorage.setItem('expires_in', JSON.stringify(response.expires_in));
     this.startRefreshTokenTimer();
     return response;
+  }
+
+  isOwner(padlet:Padlet):boolean{
+    return padlet.user_id == this.user?.id;
+  }
+
+  isAdmin(padlet:Padlet):boolean{
+    // @ts-ignore
+    const isAdmin = padlet?.padlet_user?.find(pu=>pu.user_id === this.user?.id)?.pivot.permission_level >= 4;
+    return this.isOwner(padlet) || isAdmin;
   }
 }
