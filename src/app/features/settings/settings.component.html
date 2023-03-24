@@ -1,0 +1,11 @@
+<div class="form-control w-full max-w-xs">
+  <label class="label">
+    <span class="label-text">Pick your favorite theme</span>
+  </label>
+  <select (change)="changeTheme()" [(ngModel)]="settings['theme']" class="select select-bordered">
+    <option disabled selected>Pick one</option>
+    <ng-container *ngFor="let theme of theme.AVAILABLE_THEMES">
+      <option [value]="theme">{{ theme.toUpperCase() }}</option>
+    </ng-container>
+  </select>
+</div>
