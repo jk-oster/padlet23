@@ -27,19 +27,29 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## Must-haves
-- [ ] Share Padlets
+- [x] Share Padlets
   - Share button for every Padlet in detail view
-- [ ] add Posts
+  - User permissions can be set
+  - Share link can be copied
+- [x] add Posts
   - Plus button in Padlet Show view
-- [ ] edit Posts
+- [x] edit Posts
   - Textfelder = Inputfelder + debounce put / post Request
 - [ ] comment on Posts
   - Comments below posts in detail view
   - Sum of comments
 - [ ] rate Posts
   - Sum of rating icon at Post card
+- [X] delete Posts
+  - Delete button in detail view
+- [ ] delete Padlet
+  - Delete button in detail view
 
 ## Nice-to-haves
 - [ ] sort Posts by Rating
 - [ ] edit Comments
 - [ ] image or file content for Posts
+- [ ] image suggestions for Posts from unsplash
+- [ ] search for Padlets
+- [ ] search for Posts
+- 
