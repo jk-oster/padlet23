@@ -27,7 +27,7 @@ export class PostService {
   }
 
   updatePost(id: number, data: any): Observable<Post> {
-    return this.http.post<Post>(`/post/${id}`, data);
+    return this.http.put<Post>(`/post/${id}`, data);
   }
 
   deletePost(id: number): Observable<any> {
