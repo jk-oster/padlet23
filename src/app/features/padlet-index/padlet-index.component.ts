@@ -1,7 +1,8 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
 import {Padlet} from '../../models/padlet';
 import {PadletService} from "../../core/padlet.service";
 import {Utils} from "../../shared/utils";
+import {AuthService} from "../../core/auth.service";
 
 @Component({
   selector: 'tw-padlet-card-index',
@@ -11,7 +12,7 @@ import {Utils} from "../../shared/utils";
 export class PadletIndexComponent {
   padlets: Padlet[] = [];
 
-  constructor(private padletService: PadletService) {
+  constructor(private padletService: PadletService, protected auth: AuthService) {
     this.padletService = padletService;
     padletService.getPadlets().subscribe((padlets: Padlet[]) => {
       this.padlets = padlets;
@@ -32,5 +33,25 @@ export class PadletIndexComponent {
       console.log(padlet);
     });
   }, 500);
+
+  pIsPublic = (padlet: Padlet) => {
+    // @ts-ignore
+    return padlet.public == 1;
+  }
+
+  pIsOwner = (padlet: Padlet) => {
+    // @ts-ignore
+    return padlet.user_id == this.auth.user?.id;
+  }
+
+  pIsShared = (padlet: Padlet) => {
+    // @ts-ignore
+    return padlet.padlet_user?.find(u => u.id == this.auth.user?.id)?.accepted == 1;
+  }
+
+  pIsPrivate = (padlet: Padlet) => {
+    // @ts-ignore
+    return padlet.public == 0;
+  }
 
 }

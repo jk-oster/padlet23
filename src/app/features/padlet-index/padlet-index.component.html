@@ -1,30 +1,87 @@
 <div>
   <a routerLink="/new/padlet" class="btn btn-primary mb-4">Create new Padlet</a>
 </div>
+
+<ng-container *ngIf="auth.isAuthenticated">
+  <h2 class="text-5xl font-medium mb-4">Your Padlets</h2>
+  <div class="grid grid-cols-3 gap-4">
+
+    <ng-container *ngFor="let padlet of padlets|filter: [pIsOwner]">
+      <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
+        <div class="card max-w-96 bg-base-100 shadow-xl">
+          <figure><img [src]="padlet.cover" alt=""/></figure>
+          <div class="card-body">
+            <h2 class="card-title">
+              <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
+                     type="text" placeholder="Type here"
+                     class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+              <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
+            </h2>
+          </div>
+        </div>
+      </a>
+    </ng-container>
+
+    <!--  <ng-container *ngFor="let padlet of padlets|filter: [pIsPublic]">-->
+    <!--    <ng-container *ngTemplateOutlet="padletCard; context: { padlet: padlet }"></ng-container>-->
+    <!--  </ng-container>-->
+
+  </div>
+
+  <h2 class="text-5xl font-medium mb-4">Padlets shared with you</h2>
+  <div class="grid grid-cols-3 gap-4">
+    <ng-container *ngFor="let padlet of padlets|filter: [pIsShared]">
+      <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
+        <div class="card max-w-96 bg-base-100 shadow-xl">
+          <figure><img [src]="padlet.cover" alt=""/></figure>
+          <div class="card-body">
+            <h2 class="card-title">
+              <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
+                     type="text" placeholder="Type here"
+                     class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+              <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
+            </h2>
+          </div>
+        </div>
+      </a>
+    </ng-container>
+  </div>
+</ng-container>
+
+<h2 class="text-5xl font-medium mb-4">Public Padlets</h2>
 <div class="grid grid-cols-3 gap-4">
-
-  <ng-container *ngFor="let padlet of padlets">
-
-    <!--  Padlet Card  -->
-    <a [href]="'padlet/' + padlet.id">
+  <ng-container *ngFor="let padlet of padlets|filter: [pIsPublic]">
+    <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
       <div class="card max-w-96 bg-base-100 shadow-xl">
         <figure><img [src]="padlet.cover" alt=""/></figure>
         <div class="card-body">
           <h2 class="card-title">
-            <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()" type="text" placeholder="Type here"
+            <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
+                   type="text" placeholder="Type here"
                    class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
-            <span *ngIf="padlet.public" class="badge badge-lg">Public</span>
             <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
           </h2>
-          <p>{{ padlet.description }}</p>
-          <!--        <div class="card-actions justify-end">-->
-          <!--          Open Padlet-->
-          <!--        </div>-->
         </div>
       </div>
     </a>
-
   </ng-container>
 </div>
+
+<!--  Padlet Card  -->
+<ng-template #padletCard let-padlet>
+  <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
+    <div class="card max-w-96 bg-base-100 shadow-xl">
+      <figure><img [src]="padlet.cover" alt=""/></figure>
+      <div class="card-body">
+        <h2 class="card-title">
+          <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
+                 type="text" placeholder="Type here"
+                 class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+          <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
+        </h2>
+      </div>
+    </div>
+  </a>
+</ng-template>
 
 
