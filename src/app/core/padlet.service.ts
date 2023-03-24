@@ -35,21 +35,7 @@ export class PadletService {
     return this.http.put<Padlet>(`/padlet/${padlet.id}/toggle`, {});
   }
 
-  sharePadlet(padlet: Padlet){
-    const user = [
-      {
-        "user_id": 4,
-        "permission_level": 1
-      },
-      {
-        "user_id": 5,
-        "permission_level": 2
-      },
-      {
-        "user_id": 6,
-        "permission_level": 3
-      }
-    ];
-    return this.http.post(`/padlet/${padlet.id}/share`, user);
+  sharePadlet(padlet: Padlet, mappedUserPermissions: Object): Observable<any> {
+    return this.http.post(`/padlet/${padlet.id}/share`, mappedUserPermissions);
   }
 }
