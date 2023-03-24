@@ -62,7 +62,7 @@ export class Utils {
   /**
    * An observable that emits when a local storage item changes.
    */
-  localStorageChanges(): Observable<any> {
+  static localStorageChanges(): Observable<any> {
     return fromEvent(window, 'storage').pipe(
       map((event: any) => {
         return {
@@ -73,6 +73,11 @@ export class Utils {
         };
       })
     );
+  }
+
+  // get the current url and save it to the clipboard
+  static copyToClipboard(text: string = window.location.href) {
+    navigator.clipboard.writeText(text);
   }
 }
 
