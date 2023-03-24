@@ -18,6 +18,8 @@ import {PadletStoreComponent} from './features/padlet-store/padlet-store.compone
 import {PadletShareComponent} from './features/padlet-share/padlet-share.component';
 import {PostStoreComponent} from './features/post-store/post-store.component';
 import {ModalComponent} from './features/modal/modal.component';
+import { SettingsComponent } from './features/settings/settings.component';
+import { DaisyuiComponent } from './features/daisyui/daisyui.component';
 
 /**
  * The root module of the application.
@@ -40,7 +42,9 @@ import {ModalComponent} from './features/modal/modal.component';
     PadletStoreComponent,
     PadletShareComponent,
     PostStoreComponent,
-    ModalComponent
+    ModalComponent,
+    SettingsComponent,
+    DaisyuiComponent
   ],
   // what other modules are needed to run this module
     imports: [
