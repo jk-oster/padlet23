@@ -4,9 +4,11 @@
   </div>
   <div class="flex">
 
-    <div *ngIf="padlet.public || padlet.user_id == auth.user?.id">
-      <a [routerLink]="'/new/post/' + padlet.id" class="btn btn-primary mb-4 mr-4">Create new Post</a>
-    </div>
+    <button stopPropagation (click)="showModal('addPost')" class="btn btn-primary mb-4">New Post</button>
+
+    <tw-modal *ngIf="modals['addPost']" modalName="addPost" teleport (modalCloseEvent)="closeModal($event)" modalTitle="New Post">
+      <tw-post-store [padlet]="padlet"></tw-post-store>
+    </tw-modal>
 
     <div *ngIf="!padlet.public" class="avatar-group -space-x-6">
       <ng-container *ngFor="let user of padlet.padlet_user">
@@ -19,7 +21,16 @@
 
     </div>
 
-    <a [routerLink]="'/share/padlet/' + padlet.id" class="btn btn-primary mb-4">Share Padlet</a>
+<!--  Share Padlet -->
+
+    <ng-container *ngIf="padlet.public">
+      <button class="btn" (click)="copyToClipboard()">Copy link</button>
+    </ng-container>
+    <button stopPropagation (click)="showModal('share')" class="btn btn-primary mb-4">Share Padlet</button>
+
+    <tw-modal *ngIf="modals['share']" modalClass="w-9/12 max-w-5xl" modalName="share" teleport (modalCloseEvent)="closeModal($event)" modalTitle="Share Padlet">
+      <tw-padlet-share [padlet]="padlet"></tw-padlet-share>
+    </tw-modal>
 
     <div *ngIf="padlet.user_id == auth.user?.id" class="form-control">
       <label class="label cursor-pointer">
@@ -37,10 +48,13 @@
     <div class="card max-w-96 bg-base-100 shadow-xl">
       <figure><img [src]="post.cover" alt=""/></figure>
       <div class="card-body">
-        <h2 class="card-title">{{post.content}}</h2>
+        <h2 class="card-title">
+          <input [value]="post.content" (input)="updatePost(post, $event)" (click)="$event.preventDefault()" type="text" placeholder="Type here"
+                 class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+        </h2>
         <p>{{ post.content }}</p>
         <div class="card-actions justify-end">
-          <button (click)="deletePost(post.id)" class="btn btn-outline btn-error">Delete</button>
+          <button (click)="deletePost(post.id)" class="btn btn-outline btn-sm btn-error">Delete</button>
         </div>
       </div>
     </div>

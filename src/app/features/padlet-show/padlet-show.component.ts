@@ -4,8 +4,11 @@ import {PadletService} from "../../core/padlet.service";
 import {Padlet} from "../../models/padlet";
 import {PostService} from "../../core/post.service";
 import {Post} from "../../models/post";
-import {User} from "../../models/user";
 import {AuthService} from "../../core/auth.service";
+import {Utils} from "../../shared/utils";
+import {AssocArray} from "../../shared/assoc-array";
+
+
 
 @Component({
   selector: 'tw-padlet-show',
@@ -28,6 +31,16 @@ export class PadletShowComponent implements OnInit {
 
   posts: Post[] = [];
 
+  currentPost: Post | undefined = undefined;
+
+  modals: AssocArray = {
+    share: false,
+    deletePost: false,
+    editPost: false,
+    editPadlet: false,
+    addPost: false
+  }
+
   constructor(
     private route: ActivatedRoute,
     protected auth: AuthService,
@@ -48,6 +61,20 @@ export class PadletShowComponent implements OnInit {
 
   }
 
+  updatePost(post: Post, event: any) {
+    this.debouncedUpdatePost(post, event);
+  }
+
+  debouncedUpdatePost = Utils.debounce((post: Post, event: any) => {
+    const content = event.target.value;
+    this.postService.updatePost(post.id, {
+      content: content,
+      cover: post.cover
+    }).subscribe((post: Post) => {
+      console.log(post);
+    });
+  });
+
   deletePost(id: number) {
     this.postService.deletePost(id).subscribe(() => {
       this.posts = this.posts.filter((post) => post.id !== id);
@@ -60,4 +87,16 @@ export class PadletShowComponent implements OnInit {
     });
   }
 
+  showModal(name: string) {
+    this.modals[name] = true;
+  }
+
+  closeModal(name: string) {
+    this.modals[name] = false;
+    console.log('close', name);
+  }
+
+  copyToClipboard() {
+    Utils.copyToClipboard();
+  }
 }
