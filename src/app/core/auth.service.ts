@@ -2,8 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Login} from "../models/login";
 import {User} from "../models/user";
-import {fromEvent, Observable, map, filter, lastValueFrom} from "rxjs";
-import {Utils} from "../shared/utils";
+import {Observable, lastValueFrom} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -123,12 +122,10 @@ export class AuthService {
     return response;
   }
 
-
-  public async searchUsers(searchTerm: string): Promise<User> {
+  public searchUsers(searchTerm: string): Observable<User[]> {
     // Send a request to the server to log out the user
-    return lastValueFrom(this.http.get<User>('/search/users/' + searchTerm));
+    return this.http.get<User[]>('/search/user/' + searchTerm);
   }
-
 
   private async refresh(): Promise<Login> {
     const response: Login = await lastValueFrom(this.http.get<Login>('/auth/refresh'));
