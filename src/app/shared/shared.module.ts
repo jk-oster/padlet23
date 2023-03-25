@@ -6,6 +6,7 @@ import {FilterPipe} from './filter.pipe';
 import {ClickOutsideDirective} from './click-outside.directive';
 import {TeleportDirective} from './teleport.directive';
 import {StopPropagationDirective} from './stop-propagation.directive';
+import {SortPipe} from './sort.pipe';
 
 /**
  * The shared module is a place to put all the components, directives, and pipes that are used in multiple places in the app.
@@ -21,6 +22,7 @@ import {StopPropagationDirective} from './stop-propagation.directive';
     ClickOutsideDirective,
     TeleportDirective,
     StopPropagationDirective,
+    SortPipe,
   ],
   exports: [
     FilterPipe,
@@ -28,6 +30,7 @@ import {StopPropagationDirective} from './stop-propagation.directive';
     ClickOutsideDirective,
     TeleportDirective,
     StopPropagationDirective,
+    SortPipe,
   ],
   imports: [
     CommonModule,
