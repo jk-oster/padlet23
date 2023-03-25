@@ -1,5 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Padlet} from "../../models/padlet";
+import {Component, Input} from '@angular/core';
 import {Required} from "../../shared/required";
 import {Post} from "../../models/post";
 import {AuthService} from "../../core/auth.service";
@@ -10,7 +9,7 @@ import {RatingService} from "../../core/rating.service";
   templateUrl: './rating.component.html',
   styles: []
 })
-export class RatingComponent implements OnInit {
+export class RatingComponent {
   @Input() @Required() post: Post = {
     id: 0,
     content: '',
@@ -18,66 +17,43 @@ export class RatingComponent implements OnInit {
     created_at: '',
     updated_at: '',
     user_id: 0,
-    ratings: [],
+    rating: 0,
+    rating_count: 0,
+    user_rating: 0,
+    comments_count: 0,
+    comments: [],
   };
-
-  ratingScale = [1, 2, 3, 4, 5];
 
   constructor(protected auth: AuthService, protected ratingService: RatingService) {
   }
 
-  ngOnInit(): void {
-    if(!this.post.ratings) {
-      this.post.ratings = [];
-    }
+  get liked() {
+    return this.post.user_rating === 1;
   }
 
-  get computedRating() {
-    if (this.post.ratings?.length) {
-      const ratingSum = this.post.ratings.reduce((acc, rating) => acc + rating.rating, 0);
-      return ratingSum / this.post.ratings.length;
-    }
-    return 0;
-  }
-
-  protected isChecked(index: number) {
-    if(index === this.roundedComputedRating) {
-      return true;
-    }
-    return false;
-  }
-
-  get roundedComputedRating() {
-    return Math.round(this.computedRating);
-  }
-
-  get computedRatingPercentage() {
-    return Math.floor(this.computedRating * 20);
-  }
-
-  get ratingCount() {
-    return this.post.ratings?.length ?? 0;
+  get disliked() {
+    return this.post.user_rating === -1;
   }
 
   deleteRating() {
     this.ratingService.deleteRating(this.post.id).subscribe((response: any) => {
       console.log(response);
-      this.post.ratings = this.post.ratings?.filter(r => r.user_id !== this.auth.user?.id) ?? [];
+      this.post = response;
     });
   }
 
   rate(value: number) {
-    const rating = this.post.ratings?.find(r => r.user_id === this.auth.user?.id);
+    const rating = this.post.user_rating !== 0;
     console.log(rating);
     if (rating) {
       this.ratingService.updateRating(this.post.id, value).subscribe((response: any) => {
         console.log(response);
-        rating.rating = value;
+        this.post = response;
       });
     } else {
       this.ratingService.createRating(this.post.id, value).subscribe((response: any) => {
         console.log(response);
-        this.post.ratings?.push(response);
+        this.post = response;
       });
     }
   }

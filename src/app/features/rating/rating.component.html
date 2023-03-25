@@ -1,7 +1,9 @@
-<form class="rating rating-sm items-center">
-  <span class="text-sm">{{roundedComputedRating}}</span>
-  <input type="radio" [name]="'rating-' + post.id" class="rating-hidden" stopPropagation (click)="deleteRating()" [checked]="isChecked(0)" />
-  <ng-container *ngFor="let star of ratingScale">
-    <input stopPropagation (click)="rate(star)" [value]="star" type="radio" [name]="'rating-' + post.id" class="mask mask-star-2 bg-orange-400" [checked]="isChecked(star)"/>
-  </ng-container>
-</form>
+<div class="flex items-center">
+  <span>{{ post.rating}}</span>
+  <button (click)="rate(1)" [ngClass]="{'btn-active' : liked}" class="btn btn-outline btn-sm btn-circle p-2 mx-1" title="Like this post">
+    <img src="../../assets/like.svg" alt="Thumb up" />
+  </button>
+  <button (click)="rate(-1)" [ngClass]="{'btn-active' : disliked}" class="btn btn-outline btn-sm btn-circle p-2" title="Dislike this post">
+    <img src="../../assets/dislike.svg" alt="Thumb down" />
+  </button>
+</div>
