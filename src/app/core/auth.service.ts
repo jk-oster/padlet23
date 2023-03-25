@@ -62,8 +62,7 @@ export class AuthService {
     if (this.isAuthenticated) {
       try {
         return JSON.parse(localStorage.getItem('user') ?? '');
-      }
-      catch (e) {
+      } catch (e) {
         return null;
       }
     }
@@ -136,13 +135,12 @@ export class AuthService {
     return response;
   }
 
-  isOwner(padlet:Padlet):boolean{
-    return padlet.user_id == this.user?.id;
+  isOwner(padlet: Padlet): boolean {
+    return padlet.user_id === this.user?.id;
   }
 
-  isAdmin(padlet:Padlet):boolean{
+  isAdmin(padlet: Padlet): boolean {
     // @ts-ignore
-    const isAdmin = padlet?.padlet_user?.find(pu=>pu.user_id === this.user?.id)?.pivot.permission_level >= 4;
-    return this.isOwner(padlet) || isAdmin;
+    return this.isOwner(padlet) || padlet?.padlet_user?.find(pu => pu.id === this.user?.id)?.pivot.permission_level === 4;
   }
 }
