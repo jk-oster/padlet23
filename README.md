@@ -36,10 +36,11 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - [x] edit Posts - Textfelder = Inputfelder + debounce put / post Request
 - [ ] comment on Posts
   - Comments below posts in detail view
-  - Sum of comments
-- [ ] rate Posts - Sum of rating icon at Post card
+  - Sum of comments icon at Post card
+- [x] rate Posts - Sum of rating icon at Post card
 - [X] delete Posts - Delete button in detail view
-- [ ] delete Padlet - Delete button in detail view
+- [x] delete Padlet - Delete button in detail view
+- [x] accept or decline Padlet share requests
 
 ## Nice-to-haves
 - [x] theme switcher
@@ -49,6 +50,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - [ ] image suggestions for Posts from unsplash
 - [ ] search for Padlets
 - [ ] search for Posts
-- [ ] random images for Padlets and Posts
+- [x] random images for Padlets and Posts
 - [ ] user profile
 - [ ] register user
