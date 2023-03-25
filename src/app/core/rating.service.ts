@@ -14,19 +14,15 @@ export class RatingService {
     return this.http.get<Rating[]>(`/post/${postId}/rating`);
   }
 
-  getRating(postId: number, userId: number): Observable<Rating> {
-    return this.http.get<Rating>(`/post/${postId}/rating/${userId}`);
+  createRating(postId: number, value: number): Observable<Rating> {
+    return this.http.post<Rating>('/rating', { 'post_id': postId, 'rating': value });
   }
 
-  createRating(postId: number, userId: number, value: number): Observable<Rating> {
-    return this.http.post<Rating>('/rating', { 'post_id': postId, 'value': value });
+  updateRating(postId: number, value: number): Observable<Rating> {
+    return this.http.put<Rating>(`/rating/${postId}`, { 'rating': value });
   }
 
-  updateRating(postId: number, userId: number, value: number): Observable<Rating> {
-    return this.http.put<Rating>(`/post/${postId}/rating/${userId}`, { 'value': value });
-  }
-
-  deleteRating(postId: number, userId: number): Observable<any> {
-    return this.http.delete(`/post/${postId}/rating/${userId}`);
+  deleteRating(postId: number): Observable<any> {
+    return this.http.delete(`/rating/${postId}`);
   }
 }
