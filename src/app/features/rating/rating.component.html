@@ -1,0 +1,7 @@
+<form class="rating rating-sm items-center">
+  <span class="text-sm">{{roundedComputedRating}}</span>
+  <input type="radio" [name]="'rating-' + post.id" class="rating-hidden" stopPropagation (click)="deleteRating()" [checked]="isChecked(0)" />
+  <ng-container *ngFor="let star of ratingScale">
+    <input stopPropagation (click)="rate(star)" [value]="star" type="radio" [name]="'rating-' + post.id" class="mask mask-star-2 bg-orange-400" [checked]="isChecked(star)"/>
+  </ng-container>
+</form>

@@ -20,6 +20,7 @@ import {PostStoreComponent} from './features/post-store/post-store.component';
 import {ModalComponent} from './features/modal/modal.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { DaisyuiComponent } from './features/daisyui/daisyui.component';
+import { RatingComponent } from './features/rating/rating.component';
 
 /**
  * The root module of the application.
@@ -44,7 +45,8 @@ import { DaisyuiComponent } from './features/daisyui/daisyui.component';
     PostStoreComponent,
     ModalComponent,
     SettingsComponent,
-    DaisyuiComponent
+    DaisyuiComponent,
+    RatingComponent
   ],
   // what other modules are needed to run this module
     imports: [
