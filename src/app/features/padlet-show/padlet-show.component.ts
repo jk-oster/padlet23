@@ -7,13 +7,14 @@ import {Post} from "../../models/post";
 import {AuthService} from "../../core/auth.service";
 import {Utils} from "../../shared/utils";
 import {AssocArray} from "../../shared/assoc-array";
+import {ModalContainer} from "../../shared/modal-container";
 
 @Component({
   selector: 'tw-padlet-show',
   templateUrl: './padlet-show.component.html',
   styles: []
 })
-export class PadletShowComponent implements OnInit {
+export class PadletShowComponent implements OnInit, ModalContainer {
   padletId: number = 0;
   padlet: Padlet = {
     id: 0,
@@ -28,8 +29,6 @@ export class PadletShowComponent implements OnInit {
   }
 
   posts: Post[] = [];
-
-  currentPost: Post | undefined = undefined;
 
   modals: AssocArray = {
     share: false,
@@ -90,6 +89,7 @@ export class PadletShowComponent implements OnInit {
 
   togglePublic() {
     this.padletService.togglePadletPublic(this.padlet).subscribe(() => {
+      this.padlet.public = !this.padlet.public;
       console.log('toggled');
     });
   }
@@ -100,7 +100,6 @@ export class PadletShowComponent implements OnInit {
 
   closeModal(name: string) {
     this.modals[name] = false;
-    console.log('close', name);
   }
 
   copyToClipboard() {

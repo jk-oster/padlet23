@@ -14,4 +14,5 @@ export interface Padlet {
   user?: User;
   padlet_user?: PadletUser[];
   posts?: Post[];
+  post_count?: number;
 }
