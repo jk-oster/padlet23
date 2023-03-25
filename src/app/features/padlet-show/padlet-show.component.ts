@@ -36,6 +36,7 @@ export class PadletShowComponent implements OnInit {
     deletePost: false,
     editPost: false,
     editPadlet: false,
+    deletePadlet: false,
     addPost: false
   }
 
@@ -81,6 +82,7 @@ export class PadletShowComponent implements OnInit {
   }
 
   deletePadlet() {
+    this.modals['deletePadlet'] = false;
     this.padletService.deletePadlet(this.padlet.id).subscribe(() => {
       this.router.navigate(['/']);
     });

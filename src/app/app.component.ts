@@ -9,8 +9,9 @@ import {ThemeService} from "./core/theme.service";
   selector: 'tw-root',
   // template url is the html file that will be used for this component
   templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
   // styles is the css file that will be used for this component
-  styles: []
+  // styles: []
 })
 export class AppComponent implements OnInit {
   // title is a property of this component
