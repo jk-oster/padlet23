@@ -21,6 +21,7 @@ import {ModalComponent} from './features/modal/modal.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { DaisyuiComponent } from './features/daisyui/daisyui.component';
 import { RatingComponent } from './features/rating/rating.component';
+import { InviteComponent } from './features/invite/invite.component';
 
 /**
  * The root module of the application.
@@ -46,7 +47,8 @@ import { RatingComponent } from './features/rating/rating.component';
     ModalComponent,
     SettingsComponent,
     DaisyuiComponent,
-    RatingComponent
+    RatingComponent,
+    InviteComponent
   ],
   // what other modules are needed to run this module
     imports: [
