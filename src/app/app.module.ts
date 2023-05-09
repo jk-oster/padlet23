@@ -22,6 +22,10 @@ import { SettingsComponent } from './features/settings/settings.component';
 import { DaisyuiComponent } from './features/daisyui/daisyui.component';
 import { RatingComponent } from './features/rating/rating.component';
 import { InviteComponent } from './features/invite/invite.component';
+import { PostShowComponent } from './features/post-show/post-show.component';
+import { RegisterComponent } from './features/register/register.component';
+import { LinkPreviewComponent } from './features/link-preview/link-preview.component';
+import { ErrorComponent } from './features/error/error.component';
 
 /**
  * The root module of the application.
@@ -48,7 +52,11 @@ import { InviteComponent } from './features/invite/invite.component';
     SettingsComponent,
     DaisyuiComponent,
     RatingComponent,
-    InviteComponent
+    InviteComponent,
+    PostShowComponent,
+    RegisterComponent,
+    LinkPreviewComponent,
+    ErrorComponent
   ],
   // what other modules are needed to run this module
     imports: [

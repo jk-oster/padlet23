@@ -1,8 +1,9 @@
 <div class="w-full">
   <div>
     <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
+    <h2>{{padlet.cover}}</h2>
   </div>
-  <div class="flex items-center bg-base-100 justify-evenly w-full rounded-box shadow my-4 p-4">
+  <div class="flex flex-wrap items-center bg-base-100 justify-evenly w-full rounded-box shadow my-4 p-4">
 
     <ng-container *ngIf="padlet.user?.avatar">
       <div class="flex flex-col items-center">
@@ -21,7 +22,7 @@
 
     <tw-modal *ngIf="modals['addPost']" modalName="addPost" teleport (modalCloseEvent)="closeModal($event)"
               modalTitle="New Post">
-      <tw-post-store [padlet]="padlet"></tw-post-store>
+      <tw-post-store [padlet]="padlet" (postCreated)="addPost($event)"></tw-post-store>
     </tw-modal>
 
     <div class="divider divider-horizontal"></div>
@@ -52,7 +53,7 @@
     <!--  Toggle Public  -->
     <div *ngIf="auth.isAdmin(padlet)" class="form-control">
       <label class="label cursor-pointer">
-        <input (change)="togglePublic()" type="checkbox" class="toggle toggle-success" [checked]="isPublic"/>
+        <input (change)="togglePublic()" type="checkbox" class="toggle" [checked]="isPublic"/>
         <span class=" ml-2 label-text">is public</span>
       </label>
     </div>
@@ -60,7 +61,7 @@
     <div *ngIf="isPublic || (auth.isAuthenticated && auth.isAdmin(padlet))" class="divider divider-horizontal"></div>
 
     <!--  Delete Padlet  -->
-    <button stopPropagation (click)="showModal('deletePadlet')" class="btn btn-error">Delete Padlet</button>
+    <button *ngIf="isPublic || (auth.isAuthenticated && auth.isAdmin(padlet))" stopPropagation (click)="showModal('deletePadlet')" class="btn btn-error">Delete Padlet</button>
     <tw-modal *ngIf="modals['deletePadlet']" modalName="deletePadlet" teleport (modalCloseEvent)="closeModal($event)"
               modalTitle="Delete Padlet">
       <p>Are you sure you want to delete this padlet?</p>
@@ -72,25 +73,37 @@
   </div>
 </div>
 
-<div class="grid grid-cols-4 gap-4">
-  <ng-container *ngFor="let post of posts | sort: 'rating': 'DESC'">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4">
+  <ng-container *ngFor="let post of posts |search: search.search: 'content' | sort: 'rating': 'DESC'">
 
     <!--  Post Card  -->
-    <div class="card max-w-96 bg-base-100 shadow-xl">
-      <figure><img [src]="post.cover" alt=""/></figure>
-      <div class="card-body">
-        <h2 class="card-title">
-          <input [value]="post.content" (input)="updatePost(post, $event)" (click)="$event.preventDefault()" type="text"
-                 placeholder="Type here"
-                 class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
+
+    <div stopPropagation (click)="openPost(post)" class="card max-w-96 bg-base-100 shadow-xl cursor-pointer">
+
+
+      <figure *ngIf="post.cover" class="p-4 pb-0"><img class="rounded-box" [lazyLoadImg]="post.cover" alt=""/></figure>
+      <div *ngIf="!post.cover && containsUrl(post.content)" class="p-4 pb-0">
+        <tw-link-preview [url]="getUrl(post.content)"></tw-link-preview>
+      </div>
+
+      <div class="card-body p-4">
+        <h2 class="font-bold text-sm">
+          {{ post.title }}
         </h2>
-        <p>{{ post.content }}</p>
-        <div class="card-actions justify-between">
+        <div class="text-xs" [innerHTML]="wrapUrl(post.content)"></div>
+        <!--        <p >{{ post.content }}</p>-->
+        <div class="card-actions justify-between mt-1">
           <tw-rating [post]="post"></tw-rating>
-          <button (click)="deletePost(post.id)" class="btn btn-outline btn-sm btn-error">Delete</button>
         </div>
       </div>
     </div>
 
   </ng-container>
+
+  <tw-modal *ngIf="modals['editPost']" modalName="editPost" teleport (modalCloseEvent)="closeModal($event)"
+            modalClass="w-11/12 max-w-5xl">
+    <tw-post-show (postEditEvent)="updatePost($event)" (postDeleteEvent)="deletePost($event)"
+                  [post]="currentPost"></tw-post-show>
+  </tw-modal>
+
 </div>

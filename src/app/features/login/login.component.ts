@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormGroup, FormControl} from '@angular/forms';
+import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AuthService} from "../../core/auth.service";
 import {Router} from "@angular/router";
 
@@ -17,18 +17,22 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      email: new FormControl(),
-      password: new FormControl(),
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required,Validators.minLength(6)]),
     });
   }
 
   login() {
-    console.log(this.loginForm?.value);
-    this.auth.login(this.loginForm?.value.email, this.loginForm?.value.password).then((data) => {
-      console.log(data);
-      // redirect to home page
-      this.router.navigate(['/']).then(r => console.log('login: redirected to home page'));
-    });
+    if (this.loginForm.valid) {
+      this.auth.login(this.loginForm?.value.email, this.loginForm?.value.password).then((data) => {
+        console.log(data);
+        // redirect to home page
+        this.router.navigate(['/']).then(r => console.log('login: redirected to home page'));
+      });
+    }
+    else {
+        this.loginForm.markAllAsTouched();
+    }
   }
 
   logout() {

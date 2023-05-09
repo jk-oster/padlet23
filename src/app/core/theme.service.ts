@@ -5,7 +5,7 @@ import {Injectable} from '@angular/core';
 })
 export class ThemeService {
 
-  public AVAILABLE_THEMES = ["light", "dark", "cupcake", "bumblebee", "cyberpunk", "halloween", "forest", "lofi", "wireframe", "luxury", "dracula", "night"];
+  public AVAILABLE_THEMES = ["dark", "halloween", "forest", "wireframe", "luxury", "dracula", "night"];
   constructor() {
   }
 
@@ -22,7 +22,7 @@ export class ThemeService {
     if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
-    return 'light';
+    return 'wireframe';
   }
 
   public setTheme(theme: string) {

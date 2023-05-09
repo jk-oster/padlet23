@@ -1,34 +1,35 @@
-<h3 class="text-xl font-bold">Current Users</h3>
+<div>
+  <h3 class="text-xl font-bold">Current Users</h3>
 
-<div class="my-4">
-  <div *ngFor="let user of currentPadletUsers" class="mb-4">
-    <div class="flex items-center justify-between">
-      <div class="flex  items-center">
-        <div class="avatar">
-          <div class="w-12 h-12 rounded-full">
-            <img [src]="user.avatar" [alt]="'avatar of ' + user.name">
+  <div class="my-4">
+    <div *ngFor="let user of currentPadletUsers" class="mb-4">
+      <div class="flex items-center justify-between">
+        <div class="flex  items-center">
+          <div class="avatar">
+            <div class="w-12 h-12 rounded-full">
+              <img [src]="user.avatar" [alt]="'avatar of ' + user.name">
+            </div>
+          </div>
+          <div class="ml-2">
+            <div class="text-sm font-medium">{{user.name}} ({{getPermissionLevel(user)}})</div>
           </div>
         </div>
         <div class="ml-2">
-          <div class="text-sm font-medium">{{user.name}} ({{getPermissionLevel(user)}})</div>
+          <button stopPropagation (click)="removePadletUser(user)" class="btn btn-primary btn-sm">Remove</button>
         </div>
       </div>
-      <div class="ml-2">
-        <button stopPropagation (click)="removePadletUser(user)" class="btn btn-primary btn-sm">Remove</button>
+    </div>
+
+    <hr>
+
+    <h3 class="text-xl font-bold my-4">Add users</h3>
+
+    <div class="flex items-center mb-4">
+
+      <div class="mr-4">
+        <input (input)="searchUser($event)" preventPropagation type="text" placeholder="Search user by name or email"
+               class="input input-bordered w-full max-w-xs"/>
       </div>
-    </div>
-  </div>
-
-  <hr>
-
-  <h3 class="text-xl font-bold my-4">Add users</h3>
-
-  <div class="flex items-center mb-4">
-
-    <div class="mr-4">
-    <input (input)="searchUser($event)" preventPropagation type="text" placeholder="Search user by name or email"
-           class="input input-bordered w-full max-w-xs"/>
-    </div>
       <select class="select max-w-xs" [(ngModel)]="permissionLevel">
         <option value="0" disabled selected>Choose permission level</option>
         <option value="1">Can view</option>
@@ -36,29 +37,31 @@
         <option value="3">Can edit</option>
         <option value="4">Can share and delete (Admin)</option>
       </select>
-  </div>
+    </div>
 
-  <div *ngFor="let user of possibleUsersExceptPadletUsers" class="mb-4">
+    <div *ngFor="let user of possibleUsersExceptPadletUsers" class="mb-4">
 
-    <div class="flex items-center justify-between">
-      <div class="flex  items-center">
-        <div class="avatar">
-          <div class="w-12 h-12 rounded-full">
-            <img [src]="user.avatar" [alt]="'avatar of ' + user.name">
+      <div class="flex items-center justify-between">
+        <div class="flex  items-center">
+          <div class="avatar">
+            <div class="w-12 h-12 rounded-full">
+              <img [src]="user.avatar" [alt]="'avatar of ' + user.name">
+            </div>
+          </div>
+          <div class="ml-2">
+            <div class="text-sm font-medium">{{user.name}}</div>
           </div>
         </div>
-        <div class="ml-2">
-          <div class="text-sm font-medium">{{user.name}}</div>
+        <div *ngIf="permissionLevel > 0" class="flex  items-center">
+          <div class="ml-2">
+            <button stopPropagation (click)="addPadletUser(user)" class="btn btn-primary btn-sm">Add</button>
+          </div>
         </div>
-      </div>
-      <div *ngIf="permissionLevel > 0" class="flex  items-center">
-        <div class="ml-2">
-          <button stopPropagation (click)="addPadletUser(user)" class="btn btn-primary btn-sm">Add</button>
+        <div *ngIf="permissionLevel === 0" class="text-xs font-light italic">
+          choose permission level
         </div>
-      </div>
-      <div *ngIf="permissionLevel === 0" class="text-xs font-light italic">
-        choose permission level
       </div>
     </div>
   </div>
+
 </div>

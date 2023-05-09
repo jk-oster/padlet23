@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import { Rating } from '../models/rating';
 
 @Injectable({
@@ -18,11 +18,16 @@ export class RatingService {
     return this.http.post<Rating>('/rating', { 'post_id': postId, 'rating': value });
   }
 
-  updateRating(postId: number, value: number): Observable<Rating> {
-    return this.http.put<Rating>(`/rating/${postId}`, { 'rating': value });
+  updateRating(ratingId: number, value: number): Observable<Rating> {
+    return this.http.put<Rating>(`/rating/${ratingId}`, { 'rating': value });
   }
 
-  deleteRating(postId: number): Observable<any> {
-    return this.http.delete(`/rating/${postId}`);
+  deleteRating(ratingId: number): Observable<any> {
+    return this.http.delete(`/rating/${ratingId}`);
+  }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }

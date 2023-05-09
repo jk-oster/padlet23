@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
-import {FormControl, FormGroup} from "@angular/forms";
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../core/auth.service";
 import {Router} from "@angular/router";
 import {PadletService} from "../../core/padlet.service";
@@ -24,17 +24,21 @@ export class PadletStoreComponent implements OnInit {
 
   ngOnInit(): void {
     this.storeForm = new FormGroup({
-      name: new FormControl(),
+      name: new FormControl('', [Validators.required]),
       description: new FormControl(),
       cover: new FormControl(this.imageService.randomThumbnailImage()),
     });
   }
 
   store() {
-    this.padletService.createPadlet(this.storeForm.value).subscribe(response => {
-      console.log(response);
-      this.location.back();
-    });
+    if(this.storeForm.valid) {
+      this.padletService.createPadlet(this.storeForm.value).subscribe(response => {
+        console.log(response);
+        this.location.back();
+      });
+    } else {
+      this.storeForm.markAllAsTouched();
+    }
   }
 
   back() {

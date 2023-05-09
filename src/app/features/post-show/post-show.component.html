@@ -1,0 +1,58 @@
+<div class="flex flex-col md:flex-row w-full">
+  <div class="md:w-1/2 w-full">
+    <figure *ngIf="post.cover" class="w-full my-4"><img class="object-cover w-full max-h-56 rounded-box" [lazyLoadImg]="post.cover" alt=""/></figure>
+    <div *ngIf="!post.cover && containsUrl(post.content)" class="my-4 pb-0">
+      <tw-link-preview [url]="getUrl(post.content)"></tw-link-preview>
+    </div>
+
+    <div class="card-body p-0">
+      <h2 class="card-title text-md">
+                <input [(ngModel)]="post.title" (input)="updatePost(post)" (click)="$event.preventDefault()" type="text"
+                       placeholder="Title"  title="Post title"
+                       class="card-title input input-ghost input-sm text-md text-base m-0 p-0 w-full"/>
+      </h2>
+      <textarea [(ngModel)]="post.content" (input)="updatePost(post)" (click)="$event.preventDefault()" placeholder="Description" class="textarea textarea-ghost textarea-sm p-0 m-0 w-full" ></textarea>
+
+      <input [(ngModel)]="post.cover" (input)="updatePost(post)" (click)="$event.preventDefault()" type="text"
+             placeholder="Cover image URL" title="Cover image"
+             class="input input-ghost input-sm text-sm text-base m-0 p-0 w-full"/>
+<!--      <p class="text-sm">{{ post.content }}</p>-->
+      <div class="card-actions justify-between mt-1">
+        <tw-rating [post]="post" (rated)="editedPost($event)"></tw-rating>
+                <button (click)="deletePost(post.id)" class="btn btn-outline btn-sm btn-error">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider divider-vertical md:divider-horizontal"></div>
+  <!-- comment section -->
+
+  <div  class="w-full md:w-1/2 flex-col">
+
+    <div class="h-full max-h-96 overflow-y-auto">
+      <ng-container *ngIf="post.comments">
+
+        <div *ngFor="let comment of post.comments">
+          <div [class]="isUserComment(comment) ? 'chat chat-end' : 'chat chat-start'">
+            <div class="chat-image avatar">
+              <div class="w-10 rounded-full">
+                <img [src]="comment.user_avatar" />
+              </div>
+            </div>
+            <div class="chat-header">
+              {{ comment.user?.name }}
+              <time class="text-xs opacity-50">{{ formatTime(comment.created_at) }}</time>
+            </div>
+            <div class="chat-bubble">{{ comment.text }}</div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="w-full mt-4">
+      <input (keyup.enter)="addComment()" [(ngModel)]="commentInput" type="text" placeholder="Type your comment here" class="input input-bordered w-full" />
+    </div>
+  </div>
+
+
+</div>
+

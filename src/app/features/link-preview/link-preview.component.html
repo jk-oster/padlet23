@@ -1,0 +1,9 @@
+<a *ngIf="linkData" [href]="linkData.url" stopPropagation target="_blank"
+   class="flex items-center border rounded-box overflow-hidden h-32 shadow md:max-w-xl hover:bg-neutral">
+  <img *ngIf="linkData.image_url" class="object-cover h-32 rounded-l-box w-1/4" [lazyLoadImg]="linkData.image_url"
+       alt="">
+  <div class="flex flex-col justify-between p-2 leading-normal">
+    <h4 class="mb-2 text-xs font-bold tracking-tight">{{linkData.title | truncate: 50}}</h4>
+    <p class="mb-3 font-normal text-xs">{{linkData.description | truncate: 100}}</p>
+  </div>
+</a>

@@ -7,6 +7,8 @@ import {ClickOutsideDirective} from './click-outside.directive';
 import {TeleportDirective} from './teleport.directive';
 import {StopPropagationDirective} from './stop-propagation.directive';
 import {SortPipe} from './sort.pipe';
+import {LazyLoadDirective} from './lazy-load-image.directive';
+import { TruncatePipe } from './truncate.pipe';
 
 /**
  * The shared module is a place to put all the components, directives, and pipes that are used in multiple places in the app.
@@ -23,6 +25,8 @@ import {SortPipe} from './sort.pipe';
     TeleportDirective,
     StopPropagationDirective,
     SortPipe,
+    LazyLoadDirective,
+    TruncatePipe,
   ],
   exports: [
     FilterPipe,
@@ -31,6 +35,8 @@ import {SortPipe} from './sort.pipe';
     TeleportDirective,
     StopPropagationDirective,
     SortPipe,
+    LazyLoadDirective,
+    TruncatePipe,
   ],
   imports: [
     CommonModule,

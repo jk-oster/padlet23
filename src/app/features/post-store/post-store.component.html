@@ -1,16 +1,34 @@
 <form [formGroup]="storeForm">
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Post Title</span>
+    </label>
+    <input formControlName="title" required type="text" placeholder="My new Post title" class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="title"></tw-error>
+  </div>
+
   <div class="form-control">
     <label class="label">
       <span class="label-text">Post Content</span>
     </label>
     <input formControlName="content" type="text" placeholder="My new Post content" class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="content"></tw-error>
   </div>
 
   <div class="form-control">
     <label class="label">
       <span class="label-text">Post Cover</span>
     </label>
-    <input formControlName="cover" type="text" placeholder="image url" class="input input-bordered">
+    <input formControlName="cover" type="text" placeholder="Image URL" class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="cover"></tw-error>
   </div>
-  <button (click)="store()" class="btn btn-primary mt-5  mr-4">Create Post</button>
+  <div *ngIf="cover" class="flex justify-center w-full p-4">
+    <div class="w-2/3">
+      <img class="rounded-box" [lazyLoadImg]="cover" alt="cover image preview">
+      <span>Cover image preview</span>
+    </div>
+  </div>
+
+  <button (click)="store()" [disabled]="!storeForm.valid" class="btn btn-primary mt-5  mr-4">Create Post</button>
 </form>

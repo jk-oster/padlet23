@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Login} from "../models/login";
 import {User} from "../models/user";
-import {Observable, lastValueFrom} from "rxjs";
+import {Observable, lastValueFrom, throwError} from "rxjs";
 import {Padlet} from "../models/padlet";
 
 @Injectable({
@@ -32,15 +32,6 @@ export class AuthService {
     const token = localStorage.getItem('token');
     const expired = token ? !this.isTokenExpired(token) : true;
     return !expired;
-  }
-
-  public isAuthenticated$(): Observable<boolean> {
-    return new Observable<boolean>((observer) => {
-      const token = localStorage.getItem('token');
-      const expired = token ? !this.isTokenExpired(token) : true;
-      observer.next(!expired);
-      observer.complete();
-    });
   }
 
   private isTokenExpired(token: string): boolean {
@@ -80,14 +71,34 @@ export class AuthService {
     return response;
   }
 
+  public async register(data = {
+    name: '',
+    email: '',
+    avatar: '',
+    email_confirmation: '',
+    password: '',
+    password_confirmation: '',
+  }): Promise<Login> {
+    // Send a request to the server to authenticate the user
+    const response = await lastValueFrom(this.http.post<Login>('/auth/register', {
+      name: data.name,
+      email: data.email,
+      avatar: data.avatar,
+      email_confirmation: data.email_confirmation,
+      password: data.password,
+      password_confirmation: data.password}));
+    // Save the response token into local storage
+    localStorage.setItem('token', response.access_token);
+    localStorage.setItem('expires_in', JSON.stringify(response.expires_in));
+    this.startRefreshTokenTimer();
+    this.fetchUser();
+    return response;
+  }
+
   public async login(email: string, password: string): Promise<Login> {
     // return this.throttledLogin(email, password);
     return this.loginRequest(email, password);
   }
-
-
-  // throttledLogin = Utils.throttle((email: string, password: string) => this.loginRequest(email, password), 1000);
-
 
   private startRefreshTokenTimer(): void {
     const token = localStorage.getItem('token');
@@ -141,6 +152,11 @@ export class AuthService {
 
   isAdmin(padlet: Padlet): boolean {
     // @ts-ignore
-    return this.isOwner(padlet) || padlet?.padlet_user?.find(pu => pu.id === this.user?.id)?.pivot.permission_level === 4;
+    return this.isOwner(padlet) || padlet?.padlet_user?.some(pu => (pu.id == this.user?.id && pu.pivot.permission_level == 4 ));
   }
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
+  }
+
 }

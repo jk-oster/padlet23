@@ -1,9 +1,9 @@
 <div class="flex items-center">
-  <span>{{ post.rating}}</span>
-  <button (click)="rate(1)" [ngClass]="{'btn-active' : liked}" class="btn btn-outline btn-sm btn-circle p-2 mx-1" title="Like this post">
+  <span>{{ post.rating?.rating != 0 ? post.rating?.rating : ''}}</span>
+  <button stopPropagation (click)="rate(1)" [ngClass]="{'btn-active' : liked}" class="btn btn-outline btn-sm btn-circle p-2 mx-1" title="Like this post">
     <img src="../../assets/like.svg" alt="Thumb up" />
   </button>
-  <button (click)="rate(-1)" [ngClass]="{'btn-active' : disliked}" class="btn btn-outline btn-sm btn-circle p-2" title="Dislike this post">
+  <button stopPropagation (click)="rate(-1)" [ngClass]="{'btn-active' : disliked}" class="btn btn-outline btn-sm btn-circle p-2" title="Dislike this post">
     <img src="../../assets/dislike.svg" alt="Thumb down" />
   </button>
 </div>

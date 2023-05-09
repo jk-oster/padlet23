@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {FormControl, FormGroup} from "@angular/forms";
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../core/auth.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {PostService} from "../../core/post.service";
-import {Padlet} from "../../models/padlet";
+import {Padlet, PadletFactory} from "../../models/padlet";
 import {ImageService} from "../../core/image.service";
+import {Post} from "../../models/post";
 
 @Component({
   selector: 'tw-post-store',
@@ -15,15 +16,11 @@ import {ImageService} from "../../core/image.service";
 export class PostStoreComponent implements OnInit {
   storeForm: FormGroup = new FormGroup({});
 
-  @Input() padlet: Padlet = {
-    id: 0,
-    name: '',
-    cover: '',
-    description: '',
-    public: true,
-    created_at: '',
-    updated_at: '',
-    user_id: 0,
+  @Input() padlet: Padlet = PadletFactory.empty();
+  @Output() postCreated = new EventEmitter<Post>();
+
+  get cover() {
+    return this.storeForm.get('cover')?.value;
   }
 
   padletId: number = 0;
@@ -46,17 +43,22 @@ export class PostStoreComponent implements OnInit {
       this.padletId = this.padlet.id;
     }
     this.storeForm = new FormGroup({
-      content: new FormControl(),
+      title: new FormControl('', [Validators.required]),
+      content: new FormControl('', [Validators.required]),
       cover: new FormControl(this.imageService.randomThumbnailImage()),
     });
   }
 
   store() {
-    this.postService.createPost(this.padletId, this.storeForm.value).subscribe((response: any) => {
-      console.log(response);
-      if(response.id) {
-        this.padlet.posts?.push(response);
-      }
-    });
+    if(this.storeForm.valid) {
+      this.postService.createPost(this.padletId, this.storeForm.value).subscribe((response: any) => {
+        console.log(response);
+        if (response.id) {
+          this.postCreated.emit(response);
+        }
+      });
+    } else {
+      this.storeForm.markAllAsTouched();
+    }
   }
 }

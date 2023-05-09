@@ -4,6 +4,7 @@ import {ModalContainer} from "../../shared/modal-container";
 import {AssocArray} from "../../shared/assoc-array";
 import {Router} from "@angular/router";
 import {InviteService} from "../../core/invite.service";
+import {SearchService} from "../../core/search.service";
 
 @Component({
   selector: 'tw-app-top-bar',
@@ -15,7 +16,12 @@ export class AppTopBarComponent implements ModalContainer, OnInit {
   newInvite: boolean = false;
   toastText: string = 'You have a new invitation';
 
-  constructor(protected auth: AuthService, protected router: Router, protected inviteService: InviteService) {
+  constructor(
+    protected auth: AuthService,
+    protected router: Router,
+    protected inviteService: InviteService,
+    protected search: SearchService
+  ) {
   }
 
   ngOnInit() {

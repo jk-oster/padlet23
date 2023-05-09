@@ -13,8 +13,8 @@ export class Utils {
    * @param propName
    */
   static getProp(obj: any, propName: any): any {
-    if(!obj) {
-        return null;
+    if (!obj) {
+      return null;
     }
 
     return obj[propName] ?? Object.keys(obj).reduce((foundValue, key) => {
@@ -79,5 +79,27 @@ export class Utils {
   static copyToClipboard(text: string = window.location.href) {
     navigator.clipboard.writeText(text);
   }
-}
 
+  static URL_PATTERN = /(?:(?:https?|ftp):\/\/)?(?:\S+(?::\S*)?@)?(?:(?!10(?:\.\d{1,3}){3})(?!127(?:\.\d{1,3}){3})(?!169\.254(?:\.\d{1,3}){2})(?!192\.168(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)(?:\.(?:[a-z\x{00a1}\-\x{ffff}0-9]+-?)*[a-z\x{00a1}\-\x{ffff}0-9]+)*(?:\.(?:[a-z\x{00a1}\-\x{ffff}]{2,})))(?::\d{2,5})?(?:\/[^\s]*)?/ig;
+
+  static wrapUrl(text: string, target: string = '_blank', linkClass: string = 'link') {
+    const url_pattern = Utils.URL_PATTERN;
+
+    return text.replace(url_pattern, (url) => {
+      const protocol_pattern = /^(?:(?:https?|ftp):\/\/)/i;
+      const href = protocol_pattern.test(url) ? url : 'http://' + url;
+      return `<a href="${href}" class="${linkClass}" target="${target}">${url}</a>`;
+    });
+  }
+
+  static containsUrl(text: string) : boolean {
+    const newText = text.toString();
+    return  Utils.URL_PATTERN.test(newText);
+  }
+
+  static getUrl(text: string) : string {
+    const newText = text.toString();
+    return newText.match(Utils.URL_PATTERN)?.[0] ?? '';
+  }
+
+}

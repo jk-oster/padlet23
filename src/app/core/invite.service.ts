@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject} from "rxjs";
+import {Observable, Subject, throwError} from "rxjs";
 import {PadletUser} from "../models/padlet-user";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "./auth.service";
@@ -79,5 +79,10 @@ export class InviteService {
       });
     });
     return observable;
+  }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }

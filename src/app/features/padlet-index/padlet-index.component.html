@@ -3,13 +3,13 @@
 </div>
 
 <ng-container *ngIf="auth.isAuthenticated">
-  <h2 class="text-5xl font-medium my-4">Your Padlets</h2>
-  <div class="grid grid-cols-3 gap-4">
+  <h2 class="text-5xl font-medium my-6">Your Padlets</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-    <ng-container *ngFor="let padlet of padlets|filter: [pIsOwner]">
+    <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsOwner]">
       <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
         <div class="card max-w-96 bg-base-100 shadow-xl">
-          <figure><img [src]="padlet.cover" alt=""/></figure>
+          <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
           <div class="card-body">
             <h2 class="card-title">
               <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
@@ -29,14 +29,14 @@
   </div>
 
 
-  <div class="my-4"></div>
+  <div class="my-12"></div>
 
-  <h2 class="text-5xl font-medium my-4">Padlets shared with you</h2>
-  <div class="grid grid-cols-3 gap-4">
-    <ng-container *ngFor="let padlet of padlets|filter: [pIsShared]">
+  <h2 class="text-5xl font-medium my-6">Padlets shared with you</h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsShared]">
       <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
         <div class="card max-w-96 bg-base-100 shadow-xl">
-          <figure><img [src]="padlet.cover" alt=""/></figure>
+          <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
           <div class="card-body">
             <h2 class="card-title">
               <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
@@ -44,6 +44,7 @@
                      class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
               <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
             </h2>
+            <p class="text-xs">by {{padlet.user?.name ?? 'Unknown'}}</p>
           </div>
         </div>
       </a>
@@ -51,14 +52,14 @@
   </div>
 </ng-container>
 
-<div class="my-4"></div>
+<div class="my-12"></div>
 
-<h2 class="text-5xl font-medium my-4">Public Padlets</h2>
-<div class="grid grid-cols-4 gap-4">
-  <ng-container *ngFor="let padlet of padlets|filter: [pIsPublic] | filter: [pIsOwner, pIsShared]: 'NOT'">
+<h2 class="text-5xl font-medium my-6">Public Padlets</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsPublic] | filter: [pIsOwner, pIsShared]: 'NOT'">
     <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
       <div class="card max-w-96 bg-base-100 shadow-xl">
-        <figure><img [src]="padlet.cover" alt=""/></figure>
+        <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
         <div class="card-body">
           <h2 class="card-title">
             <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"
@@ -66,6 +67,7 @@
                    class="card-title input input-ghost input-sm text-lg p-0 w-full max-w-xs"/>
             <span *ngIf="!padlet.public" class="badge badge-lg">Private</span>
           </h2>
+          <p class="text-xs">by {{padlet.user?.name ?? 'Unknown'}}</p>
         </div>
       </div>
     </a>
@@ -76,7 +78,7 @@
 <ng-template #padletCard let-padlet>
   <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
     <div class="card max-w-96 bg-base-100 shadow-xl">
-      <figure><img [src]="padlet.cover" alt=""/></figure>
+      <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
       <div class="card-body">
         <h2 class="card-title">
           <input [value]="padlet.name" (input)="updatePadlet(padlet, $event)" (click)="$event.preventDefault()"

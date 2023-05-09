@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PadletService} from "../../core/padlet.service";
-import {Padlet} from "../../models/padlet";
+import {Padlet, PadletFactory} from "../../models/padlet";
 import {PostService} from "../../core/post.service";
-import {Post} from "../../models/post";
+import {Post, PostFactory} from "../../models/post";
 import {AuthService} from "../../core/auth.service";
 import {Utils} from "../../shared/utils";
 import {AssocArray} from "../../shared/assoc-array";
 import {ModalContainer} from "../../shared/modal-container";
+import {SearchService} from "../../core/search.service";
 
 @Component({
   selector: 'tw-padlet-show',
@@ -16,17 +17,9 @@ import {ModalContainer} from "../../shared/modal-container";
 })
 export class PadletShowComponent implements OnInit, ModalContainer {
   padletId: number = 0;
-  padlet: Padlet = {
-    id: 0,
-    name: '',
-    cover: '',
-    description: '',
-    created_at: '',
-    updated_at: '',
-    posts: [],
-    user_id: 1,
-    public: true
-  }
+
+  currentPost: Post = PostFactory.empty();
+  padlet: Padlet = PadletFactory.empty();
 
   posts: Post[] = [];
 
@@ -44,9 +37,8 @@ export class PadletShowComponent implements OnInit, ModalContainer {
     protected auth: AuthService,
     private padletService: PadletService,
     private router: Router,
-    private postService: PostService) {
-    this.padletService = padletService;
-    this.postService = postService;
+    protected search: SearchService
+  ) {
   }
 
   ngOnInit() {
@@ -60,24 +52,22 @@ export class PadletShowComponent implements OnInit, ModalContainer {
 
   }
 
-  updatePost(post: Post, event: any) {
-    this.debouncedUpdatePost(post, event);
+  openPost(post: Post) {
+    this.currentPost = post;
+    this.modals['editPost'] = true;
   }
 
-  debouncedUpdatePost = Utils.debounce((post: Post, event: any) => {
-    const content = event.target.value;
-    this.postService.updatePost(post.id, {
-      content: content,
-      cover: post.cover
-    }).subscribe((post: Post) => {
-      console.log(post);
-    });
-  });
-
   deletePost(id: number) {
-    this.postService.deletePost(id).subscribe(() => {
-      this.posts = this.posts.filter((post) => post.id !== id);
-    });
+    this.closeModal('editPost');
+    this.posts = this.posts.filter((post) => post.id !== id);
+  }
+
+  updatePost(post: Post) {
+    const currentPost = this.posts.find((p) => p.id === post.id);
+    if (currentPost) {
+      // @ts-ignore
+      Object.assign(currentPost, post);
+    }
   }
 
   deletePadlet() {
@@ -104,6 +94,23 @@ export class PadletShowComponent implements OnInit, ModalContainer {
 
   copyToClipboard() {
     Utils.copyToClipboard();
+  }
+
+  public addPost(post: Post) {
+    this.posts.push(post);
+    this.closeModal('addPost');
+  }
+
+  public wrapUrl(text: string) {
+    return Utils.wrapUrl(text);
+  }
+
+  public containsUrl(text: string) {
+    return Utils.containsUrl(text);
+  }
+
+  public getUrl(text: string) {
+    return Utils.getUrl(text) ?? '';
   }
 
   public get isPublic() {

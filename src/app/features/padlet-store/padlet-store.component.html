@@ -1,9 +1,10 @@
-<form [formGroup]="storeForm">
+<form [formGroup]="storeForm" class="bg-base-200 w-96 p-4">
   <div class="form-control">
     <label class="label">
       <span class="label-text">Padlet Name</span>
     </label>
     <input formControlName="name" type="text" placeholder="My new Padlet" class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="name"></tw-error>
   </div>
   <div class="form-control">
     <label class="label">
@@ -11,13 +12,24 @@
     </label>
     <input formControlName="description" type="text" placeholder="My new Padlet description"
            class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="description"></tw-error>
   </div>
   <div class="form-control">
     <label class="label">
       <span class="label-text">Padlet Cover</span>
     </label>
     <input formControlName="cover" type="text" placeholder="image url" class="input input-bordered">
+    <tw-error [form]="storeForm" controlName="cover"></tw-error>
   </div>
-  <button (click)="store()" class="btn btn-primary mt-5  mr-4">Create Padlet</button>
-  <button (click)="back()" class="btn btn-outline mt-5">Cancel and Back</button>
+<!--  <div *ngIf="storeForm.cover.value" class="flex justify-center w-full p-4">-->
+<!--    <div class="w-2/3">-->
+<!--      <img class="rounded-box" [lazyLoadImg]="storeForm.cover.value" alt="cover image preview">-->
+<!--      <span>Cover image preview</span>-->
+<!--    </div>-->
+<!--  </div>-->
+  <div class="flex justify-evenly mt-5">
+
+    <button (click)="store()" [disabled]="!storeForm.valid" class="btn btn-primary">Create Padlet</button>
+    <button (click)="back()" class="btn btn-outline">Cancel</button>
+  </div>
 </form>

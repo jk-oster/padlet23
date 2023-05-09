@@ -1,5 +1,5 @@
 <div class="modal visible opacity-100 pointer-events-auto">
-  <div [class]="'modal-box ' + modalClass" clickOutside (clickOutside)="onClickOutside()">
+  <div [class]="'modal-box p-8 ' + modalClass" clickOutside (clickOutside)="onClickOutside()">
     <div class="flex justify-between">
       <ng-container *ngTemplateOutlet="modalHeaderContent"></ng-container>
       <h3 *ngIf="!modalHeaderContent && modalTitle" class="font-bold text-lg">{{modalTitle}}</h3>

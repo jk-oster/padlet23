@@ -1,0 +1,65 @@
+<ng-container *ngIf="!(auth.isAuthenticated)">
+  <form [formGroup]="loginForm" class="p-10 card w-96 bg-base-200">
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Name</span>
+      </label>
+      <input formControlName="name" type="text" placeholder="Name" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="name"></tw-error>
+    </div>
+
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Email</span>
+      </label>
+      <input formControlName="email" type="text" placeholder="Email" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="email"></tw-error>
+    </div>
+
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Avatar</span>
+      </label>
+      <input formControlName="avatar" type="text" placeholder="Avatar URL" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="avatar"></tw-error>
+    </div>
+
+    <div class="form-control" style="display: none;">
+      <label class="label">
+        <span class="label-text">Confirm email</span>
+      </label>
+      <input formControlName="email_confirmation" type="text" placeholder="Email" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="email_confirmation"></tw-error>
+    </div>
+
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Password</span>
+      </label>
+      <input formControlName="password" type="password" placeholder="Password" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="password"></tw-error>
+    </div>
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Confirm your password</span>
+      </label>
+      <input formControlName="password_confirmation" type="password" placeholder="Password" class="input input-bordered">
+      <tw-error [form]="loginForm" controlName="password_confirmation"></tw-error>
+    </div>
+    <button type="submit" (click)="register()" class="btn btn-primary mt-5">Register now</button>
+<!--    <button type="submit" (click)="register()" [disabled]="!loginForm.valid" class="btn btn-primary mt-5">Register now</button>-->
+
+    <div class="mt-5">
+      You already have an Account? <a routerLink="/register" class="link">Login here!</a>
+    </div>
+  </form>
+</ng-container>
+<ng-container *ngIf="(auth.isAuthenticated)">
+  <div class="card bg-base-200 p-10">
+    <h1 class="text-2xl font-bold">Welcome back!</h1>
+    <p class="mt-2">You are already logged in.</p>
+    <button type="submit" (click)="logout()" class="btn btn-primary mt-5">Logout</button>
+  </div>
+</ng-container>
+
+

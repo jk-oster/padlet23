@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import {Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -6,4 +7,9 @@ import { Injectable } from '@angular/core';
 export class StoreService {
 
   constructor() { }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
+  }
 }

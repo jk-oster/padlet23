@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,11 @@ export class ImageService {
 
   randomThumbnailImage(size = {width: 400, height: 300}): string {
     return `https://source.unsplash.com/random/${size.width}x${size.height}/?` + this.randomTopic();
+  }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 
 }

@@ -34,22 +34,24 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
   - Available depending on permissions
 - [x] add Posts - Plus button in Padlet Show view
 - [x] edit Posts - Textfelder = Inputfelder + debounce put / post Request
-- [ ] comment on Posts
+- [x] comment on Posts
   - Comments below posts in detail view
   - Sum of comments icon at Post card
 - [x] rate Posts - Sum of rating icon at Post card
 - [X] delete Posts - Delete button in detail view
 - [x] delete Padlet - Delete button in detail view
 - [x] accept or decline Padlet share requests
+- [ ] respect permissions for Padlets & Posts & Comments
+  - Backend does not save content if not authorized but frontend does not respect that yet
 
 ## Nice-to-haves
 - [x] theme switcher
 - [ ] sort Posts by Rating
-- [ ] edit Comments
 - [ ] image or file content for Posts
 - [ ] image suggestions for Posts from unsplash
-- [ ] search for Padlets
-- [ ] search for Posts
+- [x] search for Padlets
+- [x] search for Posts
 - [x] random images for Padlets and Posts
 - [ ] user profile
-- [ ] register user
+- [x] register user
+- [ ] show a comment icon with amount of comments

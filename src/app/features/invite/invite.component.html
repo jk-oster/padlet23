@@ -17,7 +17,7 @@
 
   <ng-container *ngFor="let invite of inviteService.currentPadletUsers|filter: [pIsAcceptInvite]">
     <div class="flex items-center justify-between  rounded-box bg-base-200 p-2 my-1">
-      <a class="font-bold" [href]="getLink(invite)">{{invite.name}}</a>
+      <a class="font-bold" [href]="getLink(invite)">{{invite.name}} ({{ getPermissionText(invite) }})</a>
       <button (click)="declineInvite(invite)" class="btn btn-sm btn-danger">Leave</button>
     </div>
   </ng-container>

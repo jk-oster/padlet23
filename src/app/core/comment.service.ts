@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {Observable, throwError} from 'rxjs';
 import { Comment } from '../models/comment';
 
 @Injectable({
@@ -19,14 +19,19 @@ export class CommentService {
   }
 
   createComment(postId: number, content: string): Observable<Comment> {
-    return this.http.post<Comment>('/comment', { content, 'post_id': postId });
+    return this.http.post<Comment>('/comment', { text: content, 'post_id': postId });
   }
 
   updateComment(commentId: number, content: string): Observable<Comment> {
-    return this.http.post<Comment>(`/comment/${commentId}`, { content });
+    return this.http.post<Comment>(`/comment/${commentId}`, { text: content });
   }
 
   deleteComment(commentId: number): Observable<any> {
     return this.http.delete(`/comment/${commentId}`);
+  }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }

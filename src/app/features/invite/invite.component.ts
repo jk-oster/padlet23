@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {InviteService} from "../../core/invite.service";
+import {PadletUser} from "../../models/padlet-user";
 
 @Component({
   selector: 'tw-invite',
@@ -29,6 +30,18 @@ export class InviteComponent implements OnInit {
 
   public getLink(invite: any) {
     return `/padlet/${invite.pivot.padlet_id}`;
+  }
+
+  public getPermissionText(invite: PadletUser): string {
+    const permissionsMapping = {
+      1: 'View',
+      2: 'Comment',
+      3: 'Edit',
+      4: 'Admin'
+    }
+
+    // @ts-ignore
+    return permissionsMapping[invite.pivot.permission_level] ?? 'Unknown';
   }
 
 }

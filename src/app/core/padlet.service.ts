@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Padlet} from "../models/padlet";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -37,5 +37,8 @@ export class PadletService {
 
   sharePadlet(padlet: Padlet, mappedUserPermissions: Object): Observable<any> {
     return this.http.post(`/padlet/${padlet.id}/share`, mappedUserPermissions);
+  }
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }

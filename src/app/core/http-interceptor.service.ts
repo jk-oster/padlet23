@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 
 /**
  * Middleware ~ Interceptor Service
@@ -11,7 +11,6 @@ import {Observable} from "rxjs";
 @Injectable()
 export class HttpInterceptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token');
 
     let newReq = req.clone({
       // Set REST API headers
@@ -28,6 +27,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     }
 
     // Set Authorization header
+    const token = localStorage.getItem('token');
     if (token) {
       const authReq = newReq.clone({
         headers: newReq.headers.set('Authorization', `Bearer ${token}`)
@@ -36,6 +36,11 @@ export class HttpInterceptorService implements HttpInterceptor {
       return next.handle(authReq);
     }
     return next.handle(newReq);
+  }
+
+
+  private errorHandler(error: Error | any): Observable<any> {
+    return throwError(error);
   }
 }
 
