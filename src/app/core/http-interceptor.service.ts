@@ -22,7 +22,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     if(!req.url.includes('unsplash.com')) {
         newReq = newReq.clone({
           // Prepend REST API base url
-          url: 'http://padlet.s2010456022.student.kwmhgb.at/api' + req.url,
+          url: 'https://padlet.s2010456022.student.kwmhgb.at/api' + req.url,
         });
     }
 
