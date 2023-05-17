@@ -41,14 +41,13 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 - [X] delete Posts - Delete button in detail view
 - [x] delete Padlet - Delete button in detail view
 - [x] accept or decline Padlet share requests
-- [ ] respect permissions for Padlets & Posts & Comments
-  - Backend does not save content if not authorized but frontend does not respect that yet
+- [x] respect permissions for Padlets & Posts & Comments
+  - Backend does not save content if not authorized & Frontend does not show possibilites in UI
 
 ## Nice-to-haves
 - [x] theme switcher
-- [ ] sort Posts by Rating
-- [ ] image or file content for Posts
-- [ ] image suggestions for Posts from unsplash
+- [x] image or file content for Posts
+- [x] image suggestions for Posts from unsplash
 - [x] search for Padlets
 - [x] search for Posts
 - [x] random images for Padlets and Posts
