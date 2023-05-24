@@ -8,12 +8,13 @@ import {PadletStoreComponent} from "../features/padlet-store/padlet-store.compon
 import {SettingsComponent} from "../features/settings/settings.component";
 import {DaisyuiComponent} from "../features/daisyui/daisyui.component";
 import {RegisterComponent} from "../features/register/register.component";
+import {CanNavigateProfileGuard} from "./can-navigate-profile.guard";
 
 const routes: Routes = [
   {path: '', component: PadletIndexComponent},
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
-  {path: 'settings', component: SettingsComponent},
+  {path: 'settings', component: SettingsComponent, canActivate: [CanNavigateProfileGuard]},
   {path: 'test-ui', component: DaisyuiComponent},
   {path: 'padlet/:id', component: PadletShowComponent},
   {path: 'new/padlet', component: PadletStoreComponent},
@@ -26,7 +27,8 @@ const routes: Routes = [
   //   CommonModule
   // ]
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [CanNavigateProfileGuard]
 })
 export class AppRoutingModule {
 }
