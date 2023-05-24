@@ -10,6 +10,7 @@ import {Router} from "@angular/router";
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup = new FormGroup({});
+  errorMsg: string = '';
 
   constructor(protected auth: AuthService, private router: Router) {
     this.auth = auth;
@@ -25,9 +26,10 @@ export class LoginComponent implements OnInit {
   login() {
     if (this.loginForm.valid) {
       this.auth.login(this.loginForm?.value.email, this.loginForm?.value.password).then((data) => {
-        console.log(data);
         // redirect to home page
         this.router.navigate(['/']).then(r => console.log('login: redirected to home page'));
+      }).catch((error) => {
+        this.errorMsg = error.error.message || error.error.error || error.message || error.code || 'Unknow error occured';
       });
     }
     else {

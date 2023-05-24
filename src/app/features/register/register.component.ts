@@ -11,6 +11,7 @@ import {Router} from "@angular/router";
 })
 export class RegisterComponent {
   loginForm: FormGroup = new FormGroup({});
+  errorMsg: string = '';
 
   constructor(protected auth: AuthService, private router: Router) {
     this.auth = auth;
@@ -30,9 +31,10 @@ export class RegisterComponent {
   register() {
     if(this.loginForm.valid) {
       this.auth.register(this.loginForm.value).then((data) => {
-        console.log(data);
         // redirect to home page
         this.router.navigate(['/']).then(r => console.log('register: redirected to home page'));
+      }).catch((error) => {
+        this.errorMsg = error.error.message || error.error.error || error.message || error.code || 'Unknow error occured';
       });
     } else {
       this.loginForm.markAllAsTouched();

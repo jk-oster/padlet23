@@ -12,11 +12,6 @@ export class ErrorComponent {
   @Input() controlName: string = '';
   @Input() form: FormGroup = new FormGroup({});
 
-  ngOnInit(): void {
-    console.log(this.form);
-    console.log(this.controlName);
-  }
-
   get control(): AbstractControl {
     // @ts-ignore
     return this.form.get(this.controlName);
@@ -43,6 +38,6 @@ export class ErrorComponent {
       min: `${this.controlName} must be greater than or equal to ${value.min}.`,
       max: `${this.controlName} must be less than or equal to ${value.max}.`,
     };
-    return errorMessages[key] ?? 'Unknown error!';
+    return errorMessages[key] ?? 'Unknown form input error!';
   }
 }
