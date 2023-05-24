@@ -1,7 +1,13 @@
 <div class="w-full">
   <div>
-    <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>
-    <h2>{{padlet.cover}}</h2>
+<!--    <h1 class="text-5xl font-medium mb-4">{{padlet.name}}</h1>-->
+<!--    <h2>{{padlet.description}}</h2>-->
+    <h1><input [value]="padlet.name" (input)="updatePadlet(padlet, $event, 'name')" (click)="$event.preventDefault()"
+               type="text" placeholder="Type name here"
+               class="input input-ghost text-5xl font-medium mb-4 w-full"/></h1>
+    <h2><input [value]="padlet.cover" (input)="updatePadlet(padlet, $event, 'cover')" (click)="$event.preventDefault()"
+               type="text" placeholder="Cover imgage url here"
+               class="input input-ghost text-xl font-medium mb-4 w-full"></h2>
   </div>
   <div class="flex flex-wrap items-center bg-base-100 justify-evenly w-full rounded-box shadow my-4 p-4">
 

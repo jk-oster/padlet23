@@ -25,7 +25,7 @@ export class PadletStoreComponent implements OnInit {
   ngOnInit(): void {
     this.storeForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
-      description: new FormControl(),
+      // description: new FormControl(),
       cover: new FormControl(this.imageService.randomThumbnailImage()),
     });
   }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Post} from "../models/post";
-import {catchError, Observable, retry, throwError} from "rxjs";
+import {catchError, debounceTime, distinctUntilChanged, Observable, retry, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +29,8 @@ export class PostService {
 
   updatePost(id: number, data: any): Observable<Post> {
     return this.http.put<Post>(`/post/${id}`, data)
+      // .pipe(debounceTime(500))
+      // .pipe(distinctUntilChanged())
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 

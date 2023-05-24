@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Padlet} from "../models/padlet";
-import {catchError, Observable, retry, throwError} from "rxjs";
+import {catchError, debounceTime, distinctUntilChanged, Observable, retry, throwError} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -28,6 +28,8 @@ export class PadletService {
 
   updatePadlet(id: number, data: Object): Observable<Padlet>  {
     return this.http.put<Padlet>(`/padlet/${id}`, data)
+      // .pipe(debounceTime(500))
+      // .pipe(distinctUntilChanged())
       .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 

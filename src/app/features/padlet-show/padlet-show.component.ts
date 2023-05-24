@@ -9,6 +9,7 @@ import {Utils} from "../../shared/utils";
 import {AssocArray} from "../../shared/assoc-array";
 import {ModalContainer} from "../../shared/modal-container";
 import {SearchService} from "../../core/search.service";
+import {debounceTime, distinctUntilChanged} from "rxjs";
 
 @Component({
   selector: 'tw-padlet-show',
@@ -69,6 +70,23 @@ export class PadletShowComponent implements OnInit, ModalContainer {
       Object.assign(currentPost, post);
     }
   }
+
+  updatePadlet(padlet: Padlet, event: any, property:string){
+    this.debouncedUpdatePadlet(padlet, event, property);
+  }
+
+  debouncedUpdatePadlet = Utils.debounce((padlet: Padlet, event: any, property: string) => {
+    const prop = event.target.value;
+    const newPadletData: AssocArray = {
+      name: padlet.name,
+      description: padlet.description,
+      cover: padlet.cover
+    };
+    newPadletData[property] = prop;
+    this.padletService.updatePadlet(padlet.id, newPadletData).subscribe((padlet: Padlet) => {
+      console.log('updated padlet',padlet);
+    });
+  });
 
   deletePadlet() {
     this.modals['deletePadlet'] = false;
