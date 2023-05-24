@@ -5,7 +5,7 @@ import { Utils } from './utils';
   name: 'search'
 })
 export class SearchPipe implements PipeTransform {
-  transform<T>(items: T[], searchText: string, property: string): any[] {
+  transform<T>(items: T[], searchText: string, properties: string[]): any[] {
     if (!items) {
       return [];
     }
@@ -14,7 +14,10 @@ export class SearchPipe implements PipeTransform {
     }
     searchText = searchText.toLowerCase();
     return items.filter((item: T) => {
-      return Utils.getProp(item, property).toLowerCase().includes(searchText);
+      // @ts-ignore
+      return properties.reduce((hasText, property) => {
+        return hasText || Utils.getProp(item, property).toLowerCase().includes(searchText);
+      }, false);
     });
   }
 }

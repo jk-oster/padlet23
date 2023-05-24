@@ -21,7 +21,7 @@ export class RegisterComponent {
       name: new FormControl('', [Validators.required, Validators.minLength(3)]),
       avatar: new FormControl('https://i.pravatar.cc/150?img=1', []),
       email: new FormControl('', [Validators.required, Validators.email]),
-      email_confirmation: new FormControl(),
+      email_confirmation: new FormControl(), // honeypot
       password: new FormControl('', [Validators.required, Validators.minLength(6)]),
       password_confirmation: new FormControl('', [Validators.required, Validators.minLength(6)]),
     });

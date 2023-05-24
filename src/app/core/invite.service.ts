@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subject, throwError} from "rxjs";
+import {catchError, Observable, retry, Subject, throwError} from "rxjs";
 import {PadletUser} from "../models/padlet-user";
 import {HttpClient} from "@angular/common/http";
 import {AuthService} from "./auth.service";
@@ -36,7 +36,8 @@ export class InviteService {
   }
 
   getInvites(): Observable<PadletUser[]> {
-    const observable = this.http.get<PadletUser[]>('/padlet-user');
+    const observable = this.http.get<PadletUser[]>('/padlet-user')
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
     observable.subscribe((padletUsers: PadletUser[]) => {
       this.padletUsers = padletUsers;
       console.log(this.padletUsers);
@@ -55,7 +56,8 @@ export class InviteService {
   }
 
   acceptInvite(invite: PadletUser): Observable<PadletUser> {
-    const observable = this.http.put<PadletUser>(`/padlet-user/${invite.id}`, {});
+    const observable = this.http.put<PadletUser>(`/padlet-user/${invite.id}`, {})
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
     observable.subscribe((data: PadletUser) => {
       console.log(data);
 
@@ -72,6 +74,7 @@ export class InviteService {
 
   declineInvite(invite: PadletUser): Observable<any> {
     const observable = this.http.delete<any>(`/padlet-user/${invite.id}`, {})
+      .pipe(retry(3)).pipe(catchError(this.errorHandler))
     observable.subscribe((data: any) => {
       console.log(data);
       this.padletUsers = this.padletUsers.filter((padletUser: PadletUser) => {

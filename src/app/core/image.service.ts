@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable, throwError} from 'rxjs';
+import {catchError, Observable, retry, throwError} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,8 @@ export class ImageService {
   }
 
   search(searchTerm: string): Observable<any> {
-    return this.http.get('/search/images/' + searchTerm);
+    return this.http.get('/search/images/' + searchTerm)
+      .pipe(retry(3)).pipe(catchError(this.errorHandler));
   }
 
   randomTopic(): string {
@@ -22,7 +23,6 @@ export class ImageService {
   randomThumbnailImage(size = {width: 400, height: 300}): string {
     return `https://source.unsplash.com/random/${size.width}x${size.height}/?` + this.randomTopic();
   }
-
 
   private errorHandler(error: Error | any): Observable<any> {
     return throwError(error);

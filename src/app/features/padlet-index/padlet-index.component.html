@@ -6,7 +6,7 @@
   <h2 class="text-5xl font-medium my-6">Your Padlets</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
 
-    <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsOwner]">
+    <ng-container *ngFor="let padlet of padlets|search: search.search: ['name'] |filter: [pIsOwner]">
       <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
         <div class="card max-w-96 bg-base-100 shadow-xl">
           <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
@@ -33,7 +33,7 @@
 
   <h2 class="text-5xl font-medium my-6">Padlets shared with you</h2>
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsShared]">
+    <ng-container *ngFor="let padlet of padlets|search: search.search: ['name'] |filter: [pIsShared]">
       <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
         <div class="card max-w-96 bg-base-100 shadow-xl">
           <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
@@ -56,7 +56,7 @@
 
 <h2 class="text-5xl font-medium my-6">Public Padlets</h2>
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-  <ng-container *ngFor="let padlet of padlets|search: search.search: 'name' |filter: [pIsPublic] | filter: [pIsOwner, pIsShared]: 'NOT'">
+  <ng-container *ngFor="let padlet of padlets|search: search.search: ['name'] |filter: [pIsPublic] | filter: [pIsOwner, pIsShared]: 'NOT'">
     <a *ngIf="padlet" [href]="'padlet/' + padlet.id">
       <div class="card max-w-96 bg-base-100 shadow-xl">
         <figure *ngIf="padlet.cover"><img [lazyLoadImg]="padlet.cover" alt=""/></figure>
